@@ -1,0 +1,43 @@
+Ejercicio 1:
+
+solucion(n)
+if n == 1
+	return 1
+else if n == 2
+	return 2
+else
+	return solucion(n-1) + ((n-1)*solucion(n-2))
+	
+Substract and conquer a=2 b=1 k=0  O(2**n)
+
+Ejercicio 2:
+
+La solucion es dividir el arreglo a la mitad tomando el valor medio cada vez.
+este valor medio debe compararse con sus elementos vecinos para ver que
+se trata o no de la maxima altura. si mid es la altura maxima se retorna
+ese valor, sino me fijo que el siguiente valor sea mayor, es decir, creciente
+y si es asi, el pico esta en la mitad derecha, sino en la izquierda.
+
+public static int altitud(int[] A, int ini, int fin){
+        if (ini < fin){
+            int mid = ini + (fin-ini)/2;
+            if (A[mid] < A[mid+1]){
+                return altitud(A, mid+1, fin);
+            }else
+                return altitud(A, ini, mid);
+        }else
+            return A[fin];
+    }
+a=1 b=2 k=0 O(log n)
+
+Ejercicio 3:
+
+Corresponde a greedy porque hay un conjunto de candidatos, los colores, una
+funcion de seleccion que elije siempre el primer color y el siguiente nodo, 
+y una funcion de factibilidad que tiene el criterio de usar o no el color,
+dependiendo de si sus vertices vecinos tienen ya alguno de estos colores.
+
+O(V+A) porque se recorren los vertices y las aristas 
+
+no, no siempre usa la minima cantidad de colores, puede que el orden de los vertices
+no sea el mejor y te obligue a usar un color de mas.

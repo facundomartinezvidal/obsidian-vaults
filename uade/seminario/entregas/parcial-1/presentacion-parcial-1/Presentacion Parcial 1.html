@@ -1,0 +1,1395 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>RADAR — Primer Parcial</title>
+<link rel="stylesheet" href="radar.css">
+<script src="deck-stage.js"></script>
+<style>
+  /* ============================================================
+     RADAR deck — presentation-scale tokens (1920×1080)
+     ============================================================ */
+  :root {
+    /* TYPE_SCALE (projection) */
+    --t-hero:     120px;
+    --t-title:    64px;
+    --t-subtitle: 44px;
+    --t-body:     32px;
+    --t-small:    24px;
+    --t-micro:    24px;
+    /* SPACING (projection) */
+    --pad-x:   120px;
+    --pad-top: 96px;
+    --pad-bot: 96px;
+    --title-gap: 48px;
+    --item-gap:  28px;
+  }
+
+  html, body { margin: 0; padding: 0; background: #000; color: var(--fg-1); }
+  deck-stage { font-family: var(--font-sans); }
+
+  /* -------- base slide frame -------- */
+  section.slide {
+    background: var(--bg-0);
+    color: var(--fg-1);
+    padding: 80px var(--pad-x) 72px;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-sans);
+    position: relative;
+    isolation: isolate;
+  }
+  section.slide.--alt { background: var(--bg-1); }
+  section.slide.--darkest { background: #05080F; }
+  section.slide.--brand {
+    background:
+      radial-gradient(70% 90% at 85% 20%, rgba(0,119,182,0.35) 0%, rgba(0,119,182,0) 60%),
+      radial-gradient(60% 80% at 10% 90%, rgba(79,179,220,0.18) 0%, rgba(79,179,220,0) 60%),
+      #05080F;
+  }
+
+  /* ---- Top chrome (slide headers) ---- */
+  .chrome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--t-micro);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    font-weight: 600;
+  }
+  .chrome .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--fg-2);
+  }
+  .chrome .brand .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--radar-500);
+    box-shadow: 0 0 0 4px rgba(0,119,182,0.18), 0 0 0 10px rgba(0,119,182,0.08);
+  }
+  .chrome .pagenum { font-variant-numeric: tabular-nums; letter-spacing: 0.1em; }
+
+  /* ---- Section index number treatment ---- */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    font-size: var(--t-small);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--radar-300);
+    font-weight: 700;
+    margin-top: var(--title-gap);
+  }
+  .eyebrow .line { width: 64px; height: 2px; background: var(--radar-500); }
+
+  h1.title {
+    font-size: var(--t-title);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 28px 0 0;
+    color: var(--fg-1);
+    max-width: 1500px;
+  }
+  .subtitle {
+    font-size: var(--t-subtitle);
+    font-weight: 400;
+    color: var(--fg-2);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-top: 24px;
+    max-width: 1500px;
+  }
+  .body {
+    font-size: var(--t-body);
+    line-height: 1.45;
+    color: var(--fg-2);
+    max-width: 1400px;
+  }
+  .body-strong { color: var(--fg-1); font-weight: 500; }
+  .small { font-size: var(--t-small); line-height: 1.4; color: var(--fg-3); }
+
+  /* ===============================================================
+     COMPONENTS
+     =============================================================== */
+
+  /* Key-value rows */
+  .kv-row {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 40px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line-1);
+  }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-row .k {
+    font-size: var(--t-small);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--fg-3);
+    font-weight: 600;
+  }
+  .kv-row .v {
+    font-size: var(--t-body);
+    color: var(--fg-1);
+    font-weight: 500;
+  }
+
+  /* Big stats */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .stat {
+    background: var(--bg-1);
+    border: 1px solid var(--line-1);
+    border-radius: var(--r-lg);
+    padding: 40px 36px;
+    display: flex; flex-direction: column;
+    gap: 12px;
+    min-height: 240px;
+    box-shadow: var(--shadow-1);
+  }
+  .stat .big {
+    font-size: 96px;
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--radar-300);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .label-txt {
+    font-size: var(--t-body);
+    color: var(--fg-1);
+    line-height: 1.3;
+    font-weight: 500;
+  }
+  .stat .src {
+    font-size: var(--t-small);
+    color: var(--fg-3);
+    margin-top: auto;
+    letter-spacing: 0.05em;
+  }
+
+  /* Cards */
+  .card-base {
+    background: var(--bg-1);
+    border: 1px solid var(--line-1);
+    border-radius: var(--r-lg);
+    padding: 40px;
+    box-shadow: var(--shadow-1);
+  }
+
+  /* Cause cards */
+  .cause-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    flex: 1;
+  }
+  .cause {
+    background: var(--bg-1);
+    border: 1px solid var(--line-1);
+    border-radius: var(--r-lg);
+    padding: 44px 40px;
+    display: flex; flex-direction: column;
+    box-shadow: var(--shadow-1);
+  }
+  .cause .num {
+    font-size: 88px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--radar-500);
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 32px;
+  }
+  .cause h3 {
+    font-size: var(--t-subtitle);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 0 0 20px;
+    color: var(--fg-1);
+  }
+  .cause p {
+    font-size: var(--t-body);
+    line-height: 1.4;
+    color: var(--fg-2);
+    margin: 0;
+  }
+
+  /* Quotes */
+  .quote-block {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .quote {
+    background: var(--bg-2);
+    border: 1px solid var(--line-2);
+    border-left: 4px solid var(--radar-500);
+    border-radius: var(--r-md);
+    padding: 32px 36px;
+    font-size: var(--t-body);
+    line-height: 1.35;
+    color: var(--fg-1);
+    font-weight: 400;
+    font-style: italic;
+  }
+  .quote::before { content: "“"; color: var(--radar-400); font-size: 60px; line-height: 0; margin-right: 8px; vertical-align: -20px; font-style: normal;}
+  .quote::after { content: "”"; color: var(--radar-400); font-size: 60px; line-height: 0; margin-left: 4px; vertical-align: -20px; font-style: normal;}
+
+  /* Tables */
+  table.rtable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: var(--t-small);
+  }
+  table.rtable th,
+  table.rtable td {
+    padding: 20px 24px;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--line-1);
+  }
+  table.rtable thead th {
+    font-size: var(--t-micro);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    font-weight: 700;
+    border-bottom: 1px solid var(--line-2);
+    background: transparent;
+  }
+  table.rtable tbody td { color: var(--fg-1); font-weight: 500; font-size: var(--t-small); }
+  table.rtable tbody tr:hover td { background: var(--bg-2); }
+  table.rtable tbody tr:last-child td { border-bottom: none; }
+
+  /* Hypothesis pill */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 18px;
+    border-radius: var(--r-pill);
+    font-size: var(--t-small);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .pill .dot2 { width: 10px; height: 10px; border-radius: 50%; }
+  .pill.ok { background: rgba(16, 185, 129, 0.12); color: var(--money-in); border: 1px solid rgba(16,185,129,0.3); }
+  .pill.ok .dot2 { background: var(--money-in); }
+  .pill.partial { background: rgba(245, 158, 11, 0.12); color: var(--amber-400); border: 1px solid rgba(245,158,11,0.3); }
+  .pill.partial .dot2 { background: var(--amber-500); }
+  .pill.no { background: rgba(239, 68, 68, 0.12); color: var(--money-out-2); border: 1px solid rgba(239,68,68,0.3); }
+  .pill.no .dot2 { background: var(--money-out); }
+
+  /* Matrix ERIC */
+  .eric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 24px;
+    flex: 1;
+  }
+  .eric-cell {
+    background: var(--bg-1);
+    border: 1px solid var(--line-1);
+    border-radius: var(--r-lg);
+    padding: 26px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: var(--shadow-1);
+  }
+  .eric-cell .hdr {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .eric-cell .hdr .lab {
+    font-size: var(--t-subtitle);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .eric-cell.eliminate .lab { color: var(--money-out-2); }
+  .eric-cell.reduce .lab { color: var(--amber-400); }
+  .eric-cell.raise .lab { color: var(--radar-300); }
+  .eric-cell.create .lab { color: var(--money-in); }
+  .eric-cell .chip {
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: var(--r-sm);
+    background: var(--bg-3);
+    color: var(--fg-3);
+  }
+  .eric-cell ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .eric-cell li {
+    font-size: 24px;
+    color: var(--fg-1);
+    line-height: 1.3;
+    padding-left: 20px;
+    position: relative;
+  }
+  .eric-cell li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 12px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: currentColor;
+    opacity: 0.45;
+  }
+  .eric-cell.eliminate li::before { background: var(--money-out); }
+  .eric-cell.reduce li::before { background: var(--amber-500); }
+  .eric-cell.raise li::before { background: var(--radar-400); }
+  .eric-cell.create li::before { background: var(--money-in); }
+
+  /* Persona */
+  .persona-card {
+    background: var(--bg-1);
+    border: 1px solid var(--line-1);
+    border-radius: var(--r-lg);
+    padding: 40px;
+    box-shadow: var(--shadow-1);
+    display: flex; flex-direction: column;
+    gap: 20px;
+  }
+  .avatar {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px; font-weight: 700;
+    color: white;
+    letter-spacing: -0.02em;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .avatar.a-lucia  { background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%); }
+  .avatar.a-franco { background: linear-gradient(135deg, #F97316 0%, #EF4444 100%); }
+  .avatar.a-magali { background: linear-gradient(135deg, #10B981 0%, #0EA5E9 100%); }
+
+  /* Empathy map */
+  .empathy {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .empathy .box {
+    background: var(--bg-2);
+    border: 1px solid var(--line-1);
+    border-radius: var(--r-md);
+    padding: 24px 28px;
+    display: flex; flex-direction: column;
+    gap: 10px;
+  }
+  .empathy .box .k {
+    font-size: var(--t-micro);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--radar-300);
+    font-weight: 700;
+  }
+  .empathy .box .v {
+    font-size: var(--t-small);
+    line-height: 1.35;
+    color: var(--fg-1);
+  }
+
+  /* Pain-point list */
+  .pain-list { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .pain {
+    background: var(--bg-1);
+    border: 1px solid var(--line-1);
+    border-radius: var(--r-lg);
+    padding: 28px 32px;
+    display: flex; gap: 24px; align-items: flex-start;
+    box-shadow: var(--shadow-1);
+  }
+  .pain .n {
+    font-size: 44px;
+    font-weight: 800;
+    color: var(--radar-500);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    min-width: 52px;
+  }
+  .pain .t-t { font-size: var(--t-body); color: var(--fg-1); font-weight: 600; line-height: 1.2; margin-bottom: 8px; }
+  .pain .t-d { font-size: var(--t-small); color: var(--fg-2); line-height: 1.35; }
+
+  /* Benchmark table colored cells */
+  .bm-cell {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: var(--r-pill);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    min-width: 78px;
+    text-align: center;
+  }
+  .bm-low { background: rgba(239,68,68,0.14); color: var(--money-out-2); }
+  .bm-med { background: rgba(245,158,11,0.14); color: var(--amber-400); }
+  .bm-hi  { background: rgba(16,185,129,0.16); color: var(--money-in); }
+  .bm-vlow { background: rgba(75,86,107,0.24); color: var(--fg-3); }
+  .radar-col { background: rgba(0,119,182,0.08); }
+  .radar-col-header { color: var(--radar-300) !important; }
+
+  /* Solution pillars */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; flex: 1; }
+  .pillar {
+    background: var(--bg-1);
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-lg);
+    padding: 40px;
+    display: flex; flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-2);
+  }
+  .pillar::after {
+    content: "";
+    position: absolute;
+    right: -80px; top: -80px;
+    width: 260px; height: 260px;
+    border: 2px solid rgba(0,119,182,0.16);
+    border-radius: 50%;
+  }
+  .pillar::before {
+    content: "";
+    position: absolute;
+    right: -20px; top: -20px;
+    width: 140px; height: 140px;
+    border: 2px solid rgba(0,119,182,0.28);
+    border-radius: 50%;
+  }
+  .pillar .pn {
+    font-size: 72px;
+    font-weight: 800;
+    color: var(--radar-500);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    font-variant-numeric: tabular-nums;
+  }
+  .pillar h4 {
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--fg-1);
+    margin: 0 0 18px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .pillar p {
+    font-size: var(--t-small);
+    line-height: 1.4;
+    color: var(--fg-2);
+    margin: 0;
+  }
+
+  /* Tagline */
+  .tagline {
+    font-size: 56px;
+    font-weight: 300;
+    letter-spacing: -0.015em;
+    color: var(--fg-1);
+    line-height: 1.1;
+  }
+  .tagline b { font-weight: 700; color: var(--radar-300); }
+
+  /* ----- Radar animated ring (brand slide) ----- */
+  .radar-hero {
+    position: absolute;
+    right: 110px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 620px;
+    height: 620px;
+    pointer-events: none;
+  }
+  .radar-hero .ring { position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid rgba(0,119,182,0.22); }
+  .radar-hero .ring.r2 { inset: 12%; border-color: rgba(0,119,182,0.32); }
+  .radar-hero .ring.r3 { inset: 26%; border-color: rgba(0,119,182,0.45); }
+  .radar-hero .ring.r4 { inset: 40%; border-color: rgba(0,119,182,0.60); }
+  .radar-hero .dot-center {
+    position: absolute; inset: 50% 50% 50% 50%;
+    width: 14px; height: 14px; margin: -7px 0 0 -7px;
+    background: var(--radar-500); border-radius: 50%;
+    box-shadow: 0 0 0 8px rgba(0,119,182,0.18), 0 0 40px rgba(0,119,182,0.6);
+  }
+  .radar-hero .sweep {
+    position: absolute; inset: 0; border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent 0deg, transparent 320deg, rgba(0,119,182,0.45) 355deg, rgba(79,179,220,0.85) 360deg, transparent 360.1deg);
+    animation: sweep 3.2s linear infinite;
+    mask: radial-gradient(circle at center, transparent 0, black 5%);
+  }
+  @keyframes sweep { to { transform: rotate(360deg); } }
+  .radar-hero .blip {
+    position: absolute;
+    width: 12px; height: 12px;
+    background: var(--radar-300);
+    border-radius: 50%;
+    box-shadow: 0 0 0 6px rgba(79,179,220,0.18), 0 0 0 14px rgba(79,179,220,0.08);
+  }
+  .radar-hero .blip.b1 { top: 22%; right: 28%; }
+  .radar-hero .blip.b2 { bottom: 30%; left: 26%; }
+  .radar-hero .blip.b3 { top: 54%; right: 18%; opacity: 0.6; }
+
+  /* ----- Cover type ----- */
+  .cover-wordmark {
+    font-size: 240px;
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 0.9;
+    color: var(--fg-1);
+    margin: 0;
+  }
+  .cover-tag {
+    font-size: 44px;
+    font-weight: 400;
+    color: var(--fg-2);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    max-width: 960px;
+    margin-top: 36px;
+  }
+  .cover-meta {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    color: var(--fg-3);
+    font-size: var(--t-small);
+    letter-spacing: 0.05em;
+  }
+  .cover-meta .l, .cover-meta .r { display: flex; flex-direction: column; gap: 8px; }
+  .cover-meta .l .pri, .cover-meta .r .pri { color: var(--fg-1); font-size: var(--t-body); font-weight: 600; letter-spacing: -0.005em; text-transform: none; }
+
+  /* ----- Title slide for section openers ----- */
+  .divider-line {
+    width: 160px; height: 3px; background: var(--radar-500);
+    margin: 20px 0 40px;
+  }
+
+  /* Footer pagination */
+  .footer {
+    position: absolute;
+    left: var(--pad-x); right: var(--pad-x);
+    bottom: 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--fg-3);
+    font-size: var(--t-micro);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .footer .dots { display: inline-flex; gap: 8px; }
+  .footer .dots .d { width: 6px; height: 6px; border-radius: 50%; background: var(--fg-4); }
+  .footer .dots .d.active { background: var(--radar-400); width: 24px; border-radius: 3px; }
+
+  /* Convenience */
+  .flex1 { flex: 1; }
+  .mt-auto { margin-top: auto; }
+  .row { display: flex; gap: 24px; align-items: center; }
+
+  /* Research method cards */
+  .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; flex: 1; }
+  .method {
+    background: var(--bg-1);
+    border: 1px solid var(--line-1);
+    border-radius: var(--r-lg);
+    padding: 48px;
+    display: flex; flex-direction: column; gap: 24px;
+    box-shadow: var(--shadow-1);
+  }
+  .method .ic {
+    width: 80px; height: 80px;
+    border-radius: var(--r-md);
+    background: rgba(0,119,182,0.14);
+    color: var(--radar-300);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .method h4 { font-size: 40px; font-weight: 600; margin: 0; letter-spacing: -0.01em; color: var(--fg-1); }
+  .method p { font-size: var(--t-body); line-height: 1.4; color: var(--fg-2); margin: 0; }
+
+  .method .kpi {
+    margin-top: auto;
+    display: flex;
+    gap: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line-1);
+  }
+  .method .kpi .k { font-size: 24px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-3); font-weight: 600; }
+  .method .kpi .v { font-size: 44px; font-weight: 700; color: var(--radar-300); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+
+  /* Insights bullets */
+  .insights { display: flex; flex-direction: column; gap: 24px; }
+  .insight {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 28px;
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line-1);
+  }
+  .insight:last-child { border-bottom: none; }
+  .insight .num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--radar-300);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    padding-top: 4px;
+  }
+  .insight .txt { font-size: var(--t-body); line-height: 1.4; color: var(--fg-1); }
+  .insight .txt b { color: var(--radar-300); font-weight: 600; }
+
+  /* Segment header card (persona overview) */
+  .seg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; flex: 1; }
+  .seg {
+    background: var(--bg-1);
+    border: 1px solid var(--line-1);
+    border-radius: var(--r-lg);
+    padding: 40px;
+    display: flex; flex-direction: column;
+    gap: 24px;
+    box-shadow: var(--shadow-1);
+  }
+  .seg .seg-tag {
+    font-size: var(--t-small);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--radar-300);
+    font-weight: 700;
+  }
+  .seg h4 { font-size: 44px; font-weight: 700; margin: 0; letter-spacing: -0.015em; color: var(--fg-1); }
+  .seg .pain-label { font-size: var(--t-small); color: var(--fg-3); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line-1); }
+  .seg .pain-txt { font-size: var(--t-body); line-height: 1.35; color: var(--fg-2); margin-top: 10px; }
+
+  /* Opportunity table */
+  .opp-row {
+    display: grid;
+    grid-template-columns: 1fr 2px 1.3fr;
+    gap: 40px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line-1);
+    align-items: center;
+  }
+  .opp-row:last-child { border-bottom: none; }
+  .opp-row .sep { background: var(--line-2); align-self: stretch; }
+  .opp-row .t1 { font-size: var(--t-body); color: var(--fg-1); font-weight: 600; letter-spacing: -0.005em; }
+  .opp-row .t2 { font-size: var(--t-small); color: var(--fg-2); line-height: 1.35; }
+
+  /* Validation summary chip row */
+  .val-strip { display: flex; gap: 16px; margin-top: 24px; }
+  .val-strip .chip {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 14px 22px;
+    border-radius: var(--r-pill);
+    background: var(--bg-2);
+    border: 1px solid var(--line-2);
+    font-size: var(--t-small);
+    font-weight: 600;
+    color: var(--fg-1);
+  }
+  .val-strip .chip .n { font-size: 32px; font-weight: 800; color: var(--fg-1); font-variant-numeric: tabular-nums; }
+  .val-strip .chip.ok .n { color: var(--money-in); }
+  .val-strip .chip.partial .n { color: var(--amber-400); }
+  .val-strip .chip.no .n { color: var(--money-out-2); }
+
+  /* Hypothesis two-column grid */
+  .hyp-two { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 24px; }
+  .hyp-list { display: flex; flex-direction: column; }
+  .hyp-row { display: grid; grid-template-columns: 60px 1fr auto; gap: 20px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line-1); }
+  .hyp-row:last-child { border-bottom: none; }
+  .hyp-row .hl { font-weight: 700; color: var(--radar-300); font-size: 24px; font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+  .hyp-row .ht { font-size: 24px; color: var(--fg-1); line-height: 1.3; }
+  .hyp-row .hp { font-size: 20px; padding: 6px 14px; border-radius: var(--r-pill); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
+  .hyp-row .hp.ok { background: rgba(16,185,129,0.14); color: var(--money-in); border: 1px solid rgba(16,185,129,0.3); }
+  .hyp-row .hp.partial { background: rgba(245,158,11,0.14); color: var(--amber-400); border: 1px solid rgba(245,158,11,0.3); }
+  .hyp-row .hp.no { background: rgba(239,68,68,0.14); color: var(--money-out-2); border: 1px solid rgba(239,68,68,0.3); }
+
+  /* Scenario observations table */
+  table.obs thead th:first-child { width: 32%; }
+  table.obs thead th:nth-child(2) { width: 34%; }
+
+  /* Benchmark table — compact rows to fit 9 rows on one slide */
+  table.bm-table td, table.bm-table th { padding: 9px 16px; }
+  table.bm-table tbody td { font-size: 22px; }
+  table.bm-table thead th { font-size: 20px; }
+
+</style>
+<script type="application/json" id="speaker-notes">
+[""]
+</script>
+</head>
+<body>
+<deck-stage width="1920" height="1080">
+
+  <!-- ============ SLIDE 1 · COVER ============ -->
+  <section class="slide --brand" data-label="RADAR">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>SIPI · UADE 2026 · Grupo 02</span>
+      <span class="pagenum">PRIMER PARCIAL · 20/04/2026</span>
+    </div>
+
+    <div class="radar-hero" aria-hidden="true">
+      <div class="ring"></div>
+      <div class="ring r2"></div>
+      <div class="ring r3"></div>
+      <div class="ring r4"></div>
+      <div class="sweep"></div>
+      <div class="blip b1"></div>
+      <div class="blip b2"></div>
+      <div class="blip b3"></div>
+      <div class="dot-center"></div>
+    </div>
+
+    <div style="margin-top: auto;">
+      <div style="font-size: 26px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--radar-300); font-weight: 700; margin-bottom: 24px;">Gestor de gastos personales y compartidos</div>
+      <h1 class="cover-wordmark">RADAR.</h1>
+      <p class="cover-tag">Sabé a dónde va tu plata.</p>
+    </div>
+
+    <div class="cover-meta">
+      <div class="l">
+        <span>Seminario de Integración Profesional</span>
+        <span class="pri">Curso 565668 · UADE 2026</span>
+      </div>
+      <div class="r" style="text-align:right;">
+        <span>Grupo 02</span>
+        <span class="pri">Mayán · Martinez Vidal · Moreno</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 2 · EQUIPO ============ -->
+  <section class="slide" data-label="El equipo">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">02 · EL EQUIPO</span>
+    </div>
+
+    <div class="eyebrow"><span class="line"></span>01 · Equipo</div>
+    <h1 class="title">El equipo detrás de RADAR.</h1>
+    <p class="subtitle">Grupo 02 — Seminario de Integración Profesional, UADE 2026.</p>
+
+    <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 72px; margin-top: 64px; flex: 1;">
+      <div>
+        <div class="kv-row">
+          <div class="k">Product Manager<br>Analista Funcional</div>
+          <div class="v">Jonathan Mayán</div>
+        </div>
+        <div class="kv-row">
+          <div class="k">Developer Full Stack<br>Researcher</div>
+          <div class="v">Facundo Martinez Vidal</div>
+        </div>
+        <div class="kv-row">
+          <div class="k">UX/UI Designer<br>Analista Funcional</div>
+          <div class="v">Iñaki Moreno</div>
+        </div>
+      </div>
+
+      <div class="card-base" style="display:flex; flex-direction:column; gap:24px;">
+        <div class="label" style="color: var(--radar-300); font-size: 24px;">Objetivo del producto</div>
+        <p class="body" style="color: var(--fg-1); font-size: 28px; line-height: 1.4; margin: 0;">
+          Desarrollar una plataforma integral para el <span class="body-strong">seguimiento y gestión de gastos personales y compartidos</span>, centralizando la información financiera del usuario en un único espacio, con soporte multi-moneda e inteligencia artificial.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 3 · NARRATIVA PROBLEMA ============ -->
+  <section class="slide --alt" data-label="La problematica">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">03 · PROBLEMÁTICA</span>
+    </div>
+
+    <div class="eyebrow"><span class="line"></span>02 · Problema</div>
+    <h1 class="title">La problemática.</h1>
+
+    <div style="margin-top: 72px; max-width: 1500px; display: flex; flex-direction: column; gap: 36px;">
+      <p style="font-size: 40px; line-height: 1.3; color: var(--fg-1); font-weight: 500; margin: 0; letter-spacing: -0.01em;">
+        Los jóvenes adultos con vida financiera digital activa no pueden hacer un <span style="color: var(--radar-300); font-weight: 600;">seguimiento claro de sus gastos personales</span>.
+      </p>
+      <p style="font-size: var(--t-body); line-height: 1.45; color: var(--fg-2); margin: 0; max-width: 1400px;">
+        Sus transacciones están distribuidas entre <span style="color: var(--fg-1); font-weight: 600;">múltiples billeteras y cuentas</span>, involucran <span style="color: var(--fg-1); font-weight: 600;">más de una moneda</span>, y una parte importante ocurre en contextos de <span style="color: var(--fg-1); font-weight: 600;">gasto compartido</span>.
+      </p>
+
+      <div style="margin-top: 24px; padding: 32px 40px; background: var(--bg-2); border-left: 4px solid var(--money-out); border-radius: var(--r-md);">
+        <div class="label" style="color: var(--money-out-2); margin-bottom: 12px; font-size: 24px;">El resultado</div>
+        <p style="font-size: 30px; line-height: 1.35; color: var(--fg-1); margin: 0; font-weight: 500;">
+          Descontrol financiero, falta de visibilidad sobre el gasto real y dificultad para tomar decisiones económicas informadas.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 4 · TRES CAUSAS ============ -->
+  <section class="slide" data-label="Tres causas">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">04 · CAUSAS</span>
+    </div>
+
+    <div class="eyebrow"><span class="line"></span>03 · Causas</div>
+    <h1 class="title">Tres causas del problema.</h1>
+    <p class="subtitle">Fragmentación, baja trazabilidad y gastos compartidos informales.</p>
+
+    <div style="margin-top: 64px;" class="cause-grid">
+      <div class="cause">
+        <div class="num">01</div>
+        <h3>Fragmentación financiera</h3>
+        <p>El dinero está distribuido entre Mercado Pago, Ualá, bancos tradicionales y plataformas internacionales. Impide una visión unificada del flujo de dinero.</p>
+      </div>
+      <div class="cause">
+        <div class="num">02</div>
+        <h3>Baja trazabilidad del gasto cotidiano</h3>
+        <p>El usuario realiza múltiples transacciones diarias pero no las registra, no las recuerda y no las analiza. Existe una desconexión entre lo que se gasta y lo que se cree gastar.</p>
+      </div>
+      <div class="cause">
+        <div class="num">03</div>
+        <h3>Gestión informal de gastos compartidos</h3>
+        <p>Salidas, alquiler, compras grupales se manejan con WhatsApp, notas o de memoria. Genera deudas no saldadas y falta de trazabilidad.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 5 · CONTEXTO DATOS ============ -->
+  <section class="slide --darkest" data-label="Contexto y datos">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">05 · CONTEXTO</span>
+    </div>
+
+    <div class="eyebrow"><span class="line"></span>04 · Datos</div>
+    <h1 class="title">El contexto potencia el problema.</h1>
+
+    <div class="stat-grid" style="margin-top: 56px;">
+      <div class="stat">
+        <div class="big">+70<span style="font-size: 56px; color: var(--radar-500);">%</span></div>
+        <div class="label-txt">De adultos en Argentina usa medios de pago electrónicos habitualmente.</div>
+        <div class="src">BCRA</div>
+      </div>
+      <div class="stat">
+        <div class="big">2,3</div>
+        <div class="label-txt">Billeteras virtuales en promedio por usuario joven.</div>
+        <div class="src">Relevamiento propio</div>
+      </div>
+      <div class="stat">
+        <div class="big">+60<span style="font-size: 56px; color: var(--radar-500);">%</span></div>
+        <div class="label-txt">De los jóvenes realiza gastos grupales al menos una vez por semana.</div>
+        <div class="src">Statista</div>
+      </div>
+      <div class="stat">
+        <div class="big">+80<span style="font-size: 56px; color: var(--radar-500);">%</span></div>
+        <div class="label-txt">De LATAM accede a internet desde el celular.</div>
+        <div class="src">GSMA</div>
+      </div>
+      <div class="stat">
+        <div class="big">+100<span style="font-size: 56px; color: var(--radar-500);">%</span></div>
+        <div class="label-txt">Inflación anual obliga a operar en más de una moneda.</div>
+        <div class="src">INDEC</div>
+      </div>
+      <div class="stat" style="background: transparent; border-style: dashed; border-color: var(--line-3); justify-content: center;">
+        <div class="label" style="color: var(--radar-300); font-size: 24px;">Voces del usuario</div>
+        <p style="font-size: 24px; line-height: 1.4; color: var(--fg-1); font-style: italic; margin: 0;">
+          "No sé en qué me gasté la plata a fin de mes."<br><br>
+          "Odio pedirle la plata a mis amigos por WhatsApp."
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 6 · METODOLOGIA RESEARCH ============ -->
+  <section class="slide" data-label="Metodologia de research">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">06 · METODOLOGÍA</span>
+    </div>
+
+    <div class="eyebrow"><span class="line"></span>05 · Research</div>
+    <h1 class="title">Metodología de research.</h1>
+    <p class="subtitle">El User Research es la base de la etapa <b style="color: var(--fg-1); font-weight: 600;">Empatizar</b> en Design Thinking.</p>
+
+    <div class="method-grid" style="margin-top: 56px;">
+      <div class="method">
+        <div class="ic">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h10M7 17h6"/></svg>
+        </div>
+        <h4>Encuestas</h4>
+        <p>Validar frecuencia e impacto del problema a escala, relevando hipótesis sobre comportamientos y percepciones financieras.</p>
+        <div class="kpi">
+          <div><div class="v">31</div><div class="k">Respuestas</div></div>
+          <div><div class="v">10</div><div class="k">Hipótesis</div></div>
+          <div><div class="v">6 días</div><div class="k">Campo</div></div>
+        </div>
+      </div>
+      <div class="method">
+        <div class="ic">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg>
+        </div>
+        <h4>Observaciones</h4>
+        <p>Identificar comportamientos reales en situaciones de gasto: dividir una cuenta, revisar saldos, registrar una suscripción.</p>
+        <div class="kpi">
+          <div><div class="v">4</div><div class="k">Situaciones</div></div>
+          <div><div class="v">Campo</div><div class="k">CABA</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 7 · HALLAZGOS ENCUESTA ============ -->
+  <section class="slide --alt" data-label="Hallazgos de la encuesta">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">07 · HALLAZGOS</span>
+    </div>
+
+    <div class="eyebrow"><span class="line"></span>06 · Hipótesis</div>
+    <h1 class="title">Hallazgos de la encuesta.</h1>
+    <p class="subtitle">31 respuestas · Buenos Aires · 13–18 abril 2026.</p>
+
+    <div class="val-strip">
+      <div class="chip ok"><span class="n">6</span> Validadas</div>
+      <div class="chip partial"><span class="n">2</span> Parciales</div>
+      <div class="chip no"><span class="n">2</span> No validadas</div>
+    </div>
+
+    <div class="hyp-two">
+      <div class="hyp-list">
+        <div class="hyp-row"><div class="hl">H1</div><div class="ht">Los jóvenes no tienen claridad sobre sus gastos</div><div class="hp partial">Parcial</div></div>
+        <div class="hyp-row"><div class="hl">H2</div><div class="ht">Perciben que gastan más de lo esperado</div><div class="hp ok">Validada</div></div>
+        <div class="hyp-row"><div class="hl">H3</div><div class="ht">El dinero está distribuido en múltiples plataformas</div><div class="hp ok">Validada</div></div>
+        <div class="hyp-row"><div class="hl">H4</div><div class="ht">Utilizan múltiples herramientas financieras</div><div class="hp ok">Validada</div></div>
+        <div class="hyp-row"><div class="hl">H5</div><div class="ht">Los gastos compartidos son frecuentes</div><div class="hp no">No validada</div></div>
+      </div>
+      <div class="hyp-list">
+        <div class="hyp-row"><div class="hl">H6</div><div class="ht">Gestionar gastos compartidos es difícil</div><div class="hp partial">Parcial</div></div>
+        <div class="hyp-row"><div class="hl">H7</div><div class="ht">Usan métodos informales para organizar gastos</div><div class="hp ok">Validada</div></div>
+        <div class="hyp-row"><div class="hl">H8</div><div class="ht">Las herramientas actuales resuelven parcialmente</div><div class="hp no">No validada</div></div>
+        <div class="hyp-row"><div class="hl">H9</div><div class="ht">La falta de control se percibe como problema</div><div class="hp partial">Parcial</div></div>
+        <div class="hyp-row"><div class="hl">H10</div><div class="ht">El desorden financiero genera consecuencias</div><div class="hp ok">Validada</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 8 · CONCLUSIONES ============ -->
+  <section class="slide" data-label="Conclusiones del research">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">08 · CONCLUSIONES</span>
+    </div>
+
+    <div class="eyebrow"><span class="line"></span>07 · Análisis</div>
+    <h1 class="title">Conclusiones del research.</h1>
+
+    <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; margin-top: 48px; flex: 1;">
+      <div style="display: flex; flex-direction: column; gap: 28px;">
+        <div class="card-base" style="padding: 32px 36px; border-left: 4px solid var(--money-in);">
+          <div class="label" style="color: var(--money-in); font-size: 24px; margin-bottom: 12px;">Confirmado</div>
+          <p style="margin:0; font-size: 26px; line-height: 1.4; color: var(--fg-1);">
+            Los usuarios <b style="color: var(--fg-1); font-weight:600;">gastan más de lo que creen</b>, usan múltiples plataformas, recurren a métodos informales y el desorden les genera <b style="color: var(--fg-1); font-weight:600;">consecuencias concretas</b>.
+          </p>
+        </div>
+        <div class="card-base" style="padding: 32px 36px; border-left: 4px solid var(--amber-500);">
+          <div class="label" style="color: var(--amber-400); font-size: 24px; margin-bottom: 12px;">Matices</div>
+          <p style="margin:0; font-size: 26px; line-height: 1.4; color: var(--fg-1);">
+            Gastos compartidos menos frecuentes de lo esperado. Las herramientas actuales son percibidas como <b style="color: var(--fg-1); font-weight:600;">parcialmente útiles</b>, pero no cubren la visión unificada ni los gastos compartidos.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <div class="label" style="color: var(--radar-300); font-size: 24px; margin-bottom: 20px;">Insights clave</div>
+        <div class="insights">
+          <div class="insight"><div class="num">01</div><div class="txt">El problema principal es la <b>falta de visibilidad</b>, no la falta de disciplina.</div></div>
+          <div class="insight"><div class="num">02</div><div class="txt">Los <b>métodos informales dominan</b>: WhatsApp, memoria y notas son los más usados.</div></div>
+          <div class="insight"><div class="num">03</div><div class="txt">Las herramientas existentes se perciben útiles pero <b>no cubren el problema completo</b>.</div></div>
+          <div class="insight"><div class="num">04</div><div class="txt">Las consecuencias más mencionadas: <b>ajuste a fin de mes, desorden y estrés</b>.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 9 · OBSERVACIONES ============ -->
+  <section class="slide --alt" data-label="Observaciones de campo">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">09 · OBSERVACIONES</span>
+    </div>
+
+    <div class="eyebrow"><span class="line"></span>08 · Campo</div>
+    <h1 class="title">Observaciones de campo.</h1>
+    <p class="subtitle">Cuatro situaciones cotidianas donde el problema aparece.</p>
+
+    <table class="rtable obs" style="margin-top: 48px;">
+      <thead><tr><th>Situación observada</th><th>Comportamiento actual</th><th>Problema</th></tr></thead>
+      <tbody>
+        <tr><td>División de cuenta en bar</td><td>Calculadora + transferencias</td><td style="color: var(--money-out-2);">Proceso lento, errores, incómodo</td></tr>
+        <tr><td>Compra de super compartida</td><td>WhatsApp + memoria</td><td style="color: var(--money-out-2);">Deudas no saldadas</td></tr>
+        <tr><td>Revisión de saldo a fin de mes</td><td>Abrir 3–4 apps por separado</td><td style="color: var(--money-out-2);">Visión fragmentada, frustración</td></tr>
+        <tr><td>Gasto en dólares (suscripción)</td><td>No se registra</td><td style="color: var(--money-out-2);">No aparece en el total mensual</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 48px; padding: 32px 40px; background: var(--bg-2); border-left: 4px solid var(--radar-500); border-radius: var(--r-md);">
+      <div class="label" style="color: var(--radar-300); margin-bottom: 12px; font-size: 24px;">Insight clave</div>
+      <p style="font-size: 32px; line-height: 1.3; color: var(--fg-1); margin: 0; font-weight: 500;">
+        El problema no es falta de disciplina. Es falta de una <b style="color: var(--radar-300); font-weight: 600;">herramienta adaptada al contexto real</b> del usuario.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 10 · BENCHMARKING ============ -->
+  <section class="slide" data-label="Curva de valor">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">10 · BENCHMARKING</span>
+    </div>
+
+    <div class="eyebrow"><span class="line"></span>09 · Benchmark</div>
+    <h1 class="title">Curva de valor.</h1>
+    <p class="subtitle">RADAR vs. competidores directos.</p>
+
+    <table class="rtable bm-table" style="margin-top: 22px; font-size: 18px;">
+      <thead>
+        <tr>
+          <th style="width: 28%;">Factor</th>
+          <th>Wallet</th>
+          <th>Spendee</th>
+          <th>Monefy</th>
+          <th>Mercado Pago</th>
+          <th class="radar-col-header radar-col">RADAR</th>
+        </tr>
+      </thead>
+      <tbody style="font-size: 20px;">
+        <tr><td>Facilidad de registro</td><td><span class="bm-cell bm-low">Bajo</span></td><td><span class="bm-cell bm-med">Medio</span></td><td><span class="bm-cell bm-hi">Alto</span></td><td><span class="bm-cell bm-hi">Alto</span></td><td class="radar-col"><span class="bm-cell bm-hi">Alto</span></td></tr>
+        <tr><td>Categorización automática</td><td><span class="bm-cell bm-med">Medio</span></td><td><span class="bm-cell bm-med">Medio</span></td><td><span class="bm-cell bm-low">Bajo</span></td><td><span class="bm-cell bm-med">Medio</span></td><td class="radar-col"><span class="bm-cell bm-hi">Alto</span></td></tr>
+        <tr><td>Dashboards y reportes</td><td><span class="bm-cell bm-hi">Alto</span></td><td><span class="bm-cell bm-med">Medio</span></td><td><span class="bm-cell bm-low">Bajo</span></td><td><span class="bm-cell bm-med">Medio</span></td><td class="radar-col"><span class="bm-cell bm-med">Medio</span></td></tr>
+        <tr><td>Alertas y presupuestos</td><td><span class="bm-cell bm-hi">Alto</span></td><td><span class="bm-cell bm-med">Medio</span></td><td><span class="bm-cell bm-med">Medio</span></td><td><span class="bm-cell bm-med">Medio</span></td><td class="radar-col"><span class="bm-cell bm-med">Medio</span></td></tr>
+        <tr><td>Registro por foto (IA)</td><td><span class="bm-cell bm-vlow">Muy bajo</span></td><td><span class="bm-cell bm-low">Bajo</span></td><td><span class="bm-cell bm-vlow">Muy bajo</span></td><td><span class="bm-cell bm-vlow">Muy bajo</span></td><td class="radar-col"><span class="bm-cell bm-hi">Alto</span></td></tr>
+        <tr><td>Insights proactivos</td><td><span class="bm-cell bm-vlow">Muy bajo</span></td><td><span class="bm-cell bm-vlow">Muy bajo</span></td><td><span class="bm-cell bm-vlow">Muy bajo</span></td><td><span class="bm-cell bm-low">Bajo</span></td><td class="radar-col"><span class="bm-cell bm-hi">Alto</span></td></tr>
+        <tr><td>Detección de anomalías</td><td><span class="bm-cell bm-vlow">Muy bajo</span></td><td><span class="bm-cell bm-vlow">Muy bajo</span></td><td><span class="bm-cell bm-vlow">Muy bajo</span></td><td><span class="bm-cell bm-low">Bajo</span></td><td class="radar-col"><span class="bm-cell bm-hi">Alto</span></td></tr>
+        <tr><td>Integración bancaria</td><td><span class="bm-cell bm-hi">Alto</span></td><td><span class="bm-cell bm-med">Medio</span></td><td><span class="bm-cell bm-vlow">Muy bajo</span></td><td><span class="bm-cell bm-hi">Muy alto</span></td><td class="radar-col"><span class="bm-cell bm-low">Bajo</span></td></tr>
+        <tr><td>Simplicidad de uso</td><td><span class="bm-cell bm-low">Bajo</span></td><td><span class="bm-cell bm-med">Medio</span></td><td><span class="bm-cell bm-hi">Muy alto</span></td><td><span class="bm-cell bm-hi">Alto</span></td><td class="radar-col"><span class="bm-cell bm-hi">Alto</span></td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 20px; padding: 18px 28px; background: rgba(0,119,182,0.10); border: 1px solid rgba(0,119,182,0.3); border-radius: var(--r-md); font-size: 22px; line-height: 1.35; color: var(--fg-1);">
+      <span class="label" style="color: var(--radar-300); font-size: 22px; letter-spacing: 0.16em; margin-right: 14px;">ESPACIO BLANCO</span>
+      Registro por foto con IA, insights proactivos y detección de anomalías — ahí vive el diferencial de RADAR.
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 11 · ERIC ============ -->
+  <section class="slide --darkest" data-label="Matriz ERIC">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">11 · ESTRATEGIA</span>
+    </div>
+
+    <div class="eyebrow"><span class="line"></span>10 · Océano Azul</div>
+    <h1 class="title">Matriz ERIC.</h1>
+    <p class="subtitle">Cómo diferenciamos a RADAR frente al mercado.</p>
+
+    <div class="eric-grid" style="margin-top: 48px;">
+      <div class="eric-cell eliminate">
+        <div class="hdr"><span class="chip">E</span><span class="lab">Eliminar</span></div>
+        <ul>
+          <li>Onboarding extenso</li>
+          <li>Funciones de inversión</li>
+          <li>Reportes estáticos</li>
+        </ul>
+      </div>
+      <div class="eric-cell reduce">
+        <div class="hdr"><span class="chip">R</span><span class="lab">Reducir</span></div>
+        <ul>
+          <li>Categorías predefinidas</li>
+          <li>Notificaciones genéricas</li>
+          <li>Pasos de registro</li>
+        </ul>
+      </div>
+      <div class="eric-cell raise">
+        <div class="hdr"><span class="chip">I</span><span class="lab">Incrementar</span></div>
+        <ul>
+          <li>Velocidad de registro</li>
+          <li>Calidad de dashboards</li>
+          <li>Categorización automática</li>
+        </ul>
+      </div>
+      <div class="eric-cell create">
+        <div class="hdr"><span class="chip">C</span><span class="lab">Crear</span></div>
+        <ul>
+          <li>Registro por foto de ticket</li>
+          <li>Insights proactivos con IA</li>
+          <li>Detección de gastos anómalos</li>
+          <li>Integración con WhatsApp</li>
+          <li>Sugerencias de ahorro</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 12 · SEGMENTOS ============ -->
+  <section class="slide" data-label="Los tres segmentos">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">12 · USER PERSONAS</span>
+    </div>
+
+    <div class="eyebrow"><span class="line"></span>11 · Segmentos</div>
+    <h1 class="title">Los tres segmentos.</h1>
+    <p class="subtitle">¿A quién le resuelve el problema RADAR?</p>
+
+    <div class="seg-grid" style="margin-top: 56px;">
+      <div class="seg">
+        <div class="avatar a-lucia">L</div>
+        <div class="seg-tag">01 · Convivientes</div>
+        <h4>Lucía, 27</h4>
+        <div class="pain-label">Dolor principal</div>
+        <div class="pain-txt">Deudas informales entre compañeros de depto.</div>
+      </div>
+      <div class="seg">
+        <div class="avatar a-franco">F</div>
+        <div class="seg-tag">02 · Sociales en grupo</div>
+        <h4>Franco, 27</h4>
+        <div class="pain-label">Dolor principal</div>
+        <div class="pain-txt">Dividir cuentas en tiempo real sin fricción.</div>
+      </div>
+      <div class="seg">
+        <div class="avatar a-magali">M</div>
+        <div class="seg-tag">03 · Diversificados</div>
+        <h4>Magalí, 33</h4>
+        <div class="pain-label">Dolor principal</div>
+        <div class="pain-txt">Sin visión financiera unificada en múltiples cuentas y monedas.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 13 · PERSONA LUCIA ============ -->
+  <section class="slide --alt" data-label="Lucia · convivientes">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">13 · PERSONA · LUCÍA</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 420px 1fr; gap: 64px; flex: 1; align-items: stretch;">
+      <div class="persona-card">
+        <div class="avatar a-lucia">L</div>
+        <div>
+          <div class="label" style="color: var(--radar-300); font-size: 22px; margin-bottom: 10px;">01 · Convivientes</div>
+          <h2 style="font-size: 48px; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.02em;">Lucía, 27</h2>
+        </div>
+        <p style="font-size: 22px; line-height: 1.45; color: var(--fg-2); margin: 0;">
+          Vive con dos amigas. Dividen alquiler, servicios y super. Coordinan todo por WhatsApp y siempre hay deudas que nadie recuerda bien.
+        </p>
+        <div style="margin-top: auto; padding: 22px; background: var(--bg-3); border-radius: var(--r-md); border-left: 3px solid var(--radar-500);">
+          <p style="font-size: 20px; line-height: 1.4; color: var(--fg-1); font-style: italic; margin: 0;">
+            "Después vemos cómo dividimos" — y después nadie sabe cuánto era.
+          </p>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <div>
+          <div class="eyebrow" style="margin-top: 0;"><span class="line"></span>Mapa de empatía</div>
+          <h1 class="title" style="font-size: 48px; margin-top: 16px;">Lucía · convivientes.</h1>
+        </div>
+        <div class="empathy">
+          <div class="box"><div class="k">Piensa y siente</div><div class="v">Quiere evitar conflictos, pero la desorganización la incomoda.</div></div>
+          <div class="box"><div class="k">Oye</div><div class="v">"Yo pagué la última." Recordatorios informales por chat.</div></div>
+          <div class="box"><div class="k">Ve</div><div class="v">Gastos del hogar sin registro común. Hilo de WhatsApp mezclado.</div></div>
+          <div class="box"><div class="k">Dice y hace</div><div class="v">"Mandame cuánto te debo." Anota en notas y lo abandona.</div></div>
+          <div class="box"><div class="k">Le duele</div><div class="v">Cobrarle a sus amigas sin quedar como la pesada.</div></div>
+          <div class="box"><div class="k">Aspira</div><div class="v">Convivencia ordenada donde las cuentas se cierren solas.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 14 · PERSONA FRANCO ============ -->
+  <section class="slide" data-label="Franco · sociales en grupo">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">14 · PERSONA · FRANCO</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 420px 1fr; gap: 64px; flex: 1; align-items: stretch;">
+      <div class="persona-card">
+        <div class="avatar a-franco">F</div>
+        <div>
+          <div class="label" style="color: var(--amber-400); font-size: 22px; margin-bottom: 10px;">02 · Sociales en grupo</div>
+          <h2 style="font-size: 48px; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.02em;">Franco, 27</h2>
+        </div>
+        <p style="font-size: 22px; line-height: 1.45; color: var(--fg-2); margin: 0;">
+          Sale a comer, eventos y viajes cortos frecuentemente. Siempre hay alguien que paga todo y el resto transfiere, pero sin un seguimiento claro.
+        </p>
+        <div style="margin-top: auto; padding: 22px; background: var(--bg-3); border-radius: var(--r-md); border-left: 3px solid var(--amber-500);">
+          <p style="font-size: 20px; line-height: 1.4; color: var(--fg-1); font-style: italic; margin: 0;">
+            "Después te paso lo mío" — y a veces ese después nunca llega.
+          </p>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <div>
+          <div class="eyebrow" style="margin-top: 0;"><span class="line"></span>Mapa de empatía</div>
+          <h1 class="title" style="font-size: 48px; margin-top: 16px;">Franco · sociales en grupo.</h1>
+        </div>
+        <div class="empathy">
+          <div class="box"><div class="k">Piensa y siente</div><div class="v">No quiere reclamar, pero tampoco poner siempre de más.</div></div>
+          <div class="box"><div class="k">Oye</div><div class="v">"Yo pago y después me transfieren." Reclamos suaves días después.</div></div>
+          <div class="box"><div class="k">Ve</div><div class="v">Calculadoras en la mesa. Grupos de WhatsApp mezclando pagos con charla.</div></div>
+          <div class="box"><div class="k">Dice y hace</div><div class="v">"¿Cuánto era?" No lleva registro. Espera que el otro se acuerde.</div></div>
+          <div class="box"><div class="k">Le duele</div><div class="v">La fricción de dividir en el momento. Tensión silenciosa por deudas.</div></div>
+          <div class="box"><div class="k">Aspira</div><div class="v">Resolver gastos grupales sin interrumpir el momento.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 15 · PERSONA MAGALI ============ -->
+  <section class="slide --alt" data-label="Magali · diversificados">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">15 · PERSONA · MAGALÍ</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 420px 1fr; gap: 64px; flex: 1; align-items: stretch;">
+      <div class="persona-card">
+        <div class="avatar a-magali">M</div>
+        <div>
+          <div class="label" style="color: var(--money-in); font-size: 22px; margin-bottom: 10px;">03 · Diversificados</div>
+          <h2 style="font-size: 48px; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.02em;">Magalí, 33</h2>
+        </div>
+        <p style="font-size: 22px; line-height: 1.45; color: var(--fg-2); margin: 0;">
+          Freelancer con ingresos en pesos y dólares. Tiene plata en 4 plataformas distintas y no logra ver el panorama completo sin hacer cuentas a mano.
+        </p>
+        <div style="margin-top: auto; padding: 22px; background: var(--bg-3); border-radius: var(--r-md); border-left: 3px solid var(--money-in);">
+          <p style="font-size: 20px; line-height: 1.4; color: var(--fg-1); font-style: italic; margin: 0;">
+            "Tengo que sentarme a ordenar todo" — lo dice hace meses y nunca pasa.
+          </p>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <div>
+          <div class="eyebrow" style="margin-top: 0;"><span class="line"></span>Mapa de empatía</div>
+          <h1 class="title" style="font-size: 48px; margin-top: 16px;">Magalí · diversificados.</h1>
+        </div>
+        <div class="empathy">
+          <div class="box"><div class="k">Piensa y siente</div><div class="v">Ansiedad por no saber su número real con múltiples cuentas activas.</div></div>
+          <div class="box"><div class="k">Oye</div><div class="v">Recomendaciones de ahorrar e invertir. Resúmenes que no reflejan todo.</div></div>
+          <div class="box"><div class="k">Ve</div><div class="v">4 apps abiertas para saber cuánto tiene. Tipos de cambio distintos.</div></div>
+          <div class="box"><div class="k">Dice y hace</div><div class="v">"Tengo que ordenar todo" y lo posterga. Calcula a mano.</div></div>
+          <div class="box"><div class="k">Le duele</div><div class="v">No saber su situación real. Tiempo perdido en conversiones manuales.</div></div>
+          <div class="box"><div class="k">Aspira</div><div class="v">Ver toda su situación financiera en un lugar y decidir informada.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 16 · PUNTOS DE DOLOR ============ -->
+  <section class="slide" data-label="Puntos de dolor actuales">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">16 · ESCENARIO ACTUAL</span>
+    </div>
+
+    <div class="eyebrow"><span class="line"></span>12 · Escenario actual</div>
+    <h1 class="title">Puntos de dolor actuales.</h1>
+    <p class="subtitle">Lo que el usuario vive hoy.</p>
+
+    <div class="pain-list" style="margin-top: 48px;">
+      <div class="pain"><div class="n">01</div><div><div class="t-t">Fin de mes sin claridad</div><div class="t-d">Llega sin saber en qué se fue el dinero, aunque pagó todo de forma digital.</div></div></div>
+      <div class="pain"><div class="n">02</div><div><div class="t-t">Deudas sociales sin resolver</div><div class="t-d">El dinero entre amigos queda pendiente días o semanas, genera tensión.</div></div></div>
+      <div class="pain"><div class="n">03</div><div><div class="t-t">Visión fragmentada</div><div class="t-d">Para saber cuánto tiene, el usuario abre 3–4 apps distintas.</div></div></div>
+      <div class="pain"><div class="n">04</div><div><div class="t-t">Cashless effect</div><div class="t-d">Al no percibir físicamente el dinero, subestima sus gastos reales.</div></div></div>
+      <div class="pain"><div class="n">05</div><div><div class="t-t">Multi-moneda sin soporte</div><div class="t-d">Los gastos en dólares (suscripciones, apps) no aparecen en ningún resumen.</div></div></div>
+      <div class="pain"><div class="n">06</div><div><div class="t-t">Alta fricción en el registro</div><div class="t-d">Las apps piden demasiados datos; el usuario las abandona en días.</div></div></div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 17 · OPORTUNIDADES ============ -->
+  <section class="slide --alt" data-label="Oportunidades de mejora">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">17 · OPORTUNIDADES</span>
+    </div>
+
+    <div class="eyebrow"><span class="line"></span>13 · Oportunidades</div>
+    <h1 class="title">Oportunidades de mejora.</h1>
+    <p class="subtitle">Dónde hay espacio para innovar — y cómo lo resuelve RADAR.</p>
+
+    <div style="margin-top: 40px; display: grid; grid-template-columns: 240px 1fr 1fr; gap: 48px;">
+      <div class="label" style="color: var(--fg-3); padding-top: 24px; font-size: 22px;">Oportunidad</div>
+      <div class="label" style="color: var(--fg-3); padding-top: 24px; font-size: 22px;">Descripción</div>
+      <div class="label" style="color: var(--radar-300); padding-top: 24px; font-size: 22px;">Cómo lo resuelve RADAR</div>
+    </div>
+
+    <div style="margin-top: 8px;">
+      <div class="opp-row"><div class="t1">Registro sin fricción</div><div class="sep"></div><div class="t2" style="grid-column: span 1; display:grid; grid-template-columns: 1.1fr 1fr; gap: 48px;"><span style="color: var(--fg-2);">Apps actuales piden demasiados datos.</span><span style="color: var(--radar-300); font-weight: 500;">Carga en segundos, sin categorización obligatoria.</span></div></div>
+      <div class="opp-row"><div class="t1">Gastos compartidos nativos</div><div class="sep"></div><div class="t2" style="display:grid; grid-template-columns: 1.1fr 1fr; gap: 48px;"><span style="color: var(--fg-2);">Todos tienen que registrarse.</span><span style="color: var(--radar-300); font-weight: 500;">Sin requerir que todos se registren.</span></div></div>
+      <div class="opp-row"><div class="t1">Visión multi-moneda</div><div class="sep"></div><div class="t2" style="display:grid; grid-template-columns: 1.1fr 1fr; gap: 48px;"><span style="color: var(--fg-2);">Dólares invisibles en los resúmenes.</span><span style="color: var(--radar-300); font-weight: 500;">Pesos y dólares en un solo dashboard.</span></div></div>
+      <div class="opp-row"><div class="t1">Integración conversacional</div><div class="sep"></div><div class="t2" style="display:grid; grid-template-columns: 1.1fr 1fr; gap: 48px;"><span style="color: var(--fg-2);">Abrir la app es fricción.</span><span style="color: var(--radar-300); font-weight: 500;">Registro por WhatsApp sin abrir la app.</span></div></div>
+      <div class="opp-row"><div class="t1">Insights proactivos</div><div class="sep"></div><div class="t2" style="display:grid; grid-template-columns: 1.1fr 1fr; gap: 48px;"><span style="color: var(--fg-2);">Reportes estáticos que el usuario nunca revisa.</span><span style="color: var(--radar-300); font-weight: 500;">IA que detecta patrones y avisa antes.</span></div></div>
+      <div class="opp-row"><div class="t1">Contextual para Argentina</div><div class="sep"></div><div class="t2" style="display:grid; grid-template-columns: 1.1fr 1fr; gap: 48px;"><span style="color: var(--fg-2);">Apps globales ignoran dinámica local.</span><span style="color: var(--radar-300); font-weight: 500;">Billeteras locales, dualidad cambiaria, dinámica social AR.</span></div></div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 18 · SOLUCION ============ -->
+  <section class="slide --brand" data-label="La solucion">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">18 · IDEACIÓN</span>
+    </div>
+
+    <div class="eyebrow"><span class="line"></span>14 · Solución</div>
+    <h1 class="title" style="font-size: 72px;">RADAR — la solución.</h1>
+    <p class="subtitle" style="max-width: 1500px;">
+      Una plataforma digital accesible desde celular y web que centraliza el seguimiento de gastos personales y compartidos en un solo lugar, con foco en simplicidad y adaptada al contexto financiero argentino.
+    </p>
+
+    <div class="pillars" style="margin-top: 56px;">
+      <div class="pillar">
+        <div class="pn">①</div>
+        <h4>Seguimiento personal unificado</h4>
+        <p>Registrá gastos de forma rápida, categorizalos y visualizá en qué gastás mes a mes, sin importar desde qué billetera o cuenta.</p>
+      </div>
+      <div class="pillar">
+        <div class="pn">②</div>
+        <h4>Gestión de gastos compartidos</h4>
+        <p>Registrá gastos entre varias personas, calculá automáticamente quién debe qué y saldá en segundos. Sin WhatsApp. Sin memoria.</p>
+      </div>
+      <div class="pillar">
+        <div class="pn">③</div>
+        <h4>Multi-moneda + IA</h4>
+        <p>Pesos y dólares en una sola vista con conversión automática. IA que detecta patrones y genera recomendaciones personalizadas.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 56px; display: flex; align-items: center; justify-content: space-between;">
+      <p class="tagline"><b>RADAR.</b> Sabé a dónde va tu plata.</p>
+      <div style="display: flex; align-items: center; gap: 16px; color: var(--fg-3); font-size: 22px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;">
+        <div style="width: 40px; height: 1px; background: var(--fg-4);"></div>
+        Gracias
+      </div>
+    </div>
+  </section>
+
+</deck-stage>
+</body>
+</html>

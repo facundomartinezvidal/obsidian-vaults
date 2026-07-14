@@ -1,0 +1,76 @@
+Ejercicio 1:
+
+Llenar una matriz nueva con el valor de la posicion correspondiente en la matriz C
+mas el minimo de las 3 posicicones anteriores de las cuales se puede llegar, pero 
+en la matriz actual que va arrastrando la suma.
+
+Algoritmo(C[][])
+	crearMatriz M 
+	for i in range(C.length) // m-1
+		for j in range(C[0].length) // n-1
+			if (j == 0)
+				M[i,j] = C[i,j]
+			else
+				M[i,j] = min(M[i+1 % C.length,j-1], M[i,j-1], M[i-1 % C.length,j-1])
+				               + C[i,j]
+	return menor en la columna n-1
+O(n*m)
+Recorrido(M[][])
+	//Arreglo con j posiciones
+	int[] R // 1 arriba diagonal, 0 medio, -1 abajo diagonal
+	
+	while(j != 0) // partimos de i en el minimo valor de la ultima columna (j = n-1)
+		menor = min(M[i+1 % C.length,j-1], M[i,j-1], M[i-1 % C.length,j-1])
+		if(menor == M[i-1 % C.length,j-1]) // viene de diagonal arriba
+			R[j] = -1
+			i = i-1 % C.length
+		else if(menor == M[i,j-1]) // viene de izquierda
+			R[j] = 0
+		else
+			R[j] = 1
+			i = i+1 % C.length
+		j--
+		
+O(n)	
+R [ 1, -1, 0, 0, 1, -1]
+
+
+Ejercicio 2:
+
+S&C(n)
+	if (n==0)
+		return 1
+	else
+		return ((2 * (2*n-1)) / n+1) * S&C(n-1)
+		
+a=1 b=1 k=0  O(n) 
+
+Ejercicio 3:
+
+a) Greedy con dijkstra para cada nodo
+b) O(n**3)
+c) No es el mas optimo porque se calcula el menor para cada nodo visitado
+	pero a la vuelta se hace el camino directo sin revisar cual es el menor costo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

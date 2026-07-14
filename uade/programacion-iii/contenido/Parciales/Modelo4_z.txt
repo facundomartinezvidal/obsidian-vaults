@@ -1,0 +1,114 @@
+EJERCICIO 1: ----------------
+
+N examenes
+AlgoritmoD&C(int[] N, int ini, fin)
+	if (ini+1 == fin)
+		return ini,fin
+	else
+		mid = (ini+fin) / 2
+		if (copia(ini,mid)) // devuelve true si encuentra examenes copiados
+			AlgoritmoD&C(N, ini, mid)
+		else if (copia(mid+1, fin))
+			AlgoritmoD&C(N, mid+1, fin)
+		else
+			mid2 = (ini+mid) / 2
+			grupo1 = N[ini:mid2]
+			grupo2 = N[mid2:mid]
+			grupo3 = N[mid:mid+mid2]
+			grupo4 = N[mid+mid2:fin]
+			
+			//Se prueban todas las combinaciones hasta que de true
+			  y se llama de nuevo a la funcion con estos dos grupos juntos
+		
+O(log n)  a=1 b=2 k=0
+Divede and Conquer
+Con 4096 examenes:
+mejor caso y peor caso : 12 ya que mi algoritmo reduce a una opcion al final de todo
+
+EJERCICIO 2: ----------------
+
+Producto  Precio     Descuento   0     50     100     150     200     250
+P1        $ 450.00   10 %        
+P2        $ 200.00   10 %
+P3        $ 100.00   5 %
+P4        $ 300.00   9 %
+
+si el precio del objeto (i) es menor o igual al presupuesto actual (j) me fijo
+si la solucion a esa cantidad de plata atras sumandole el descuento actual, es 
+mayor que la solucion que se le dio arriba sin considerar este objeto. Siempre 
+que no estemos en la primera fila, ya que ahi no podras tomar el de arriba, y si
+el precio es mayor que el presupuesto pondremos 0 de descuento en esa posicion.
+Programacion dinamica, que te da una solucion optima basandose en subsoluciones
+optimas anteriores. Ademas tiene similitudes con el problema de la mochila 0-1
+Se deben ingresar dos veces los productos quedando el doble de filas, ya que
+se pueden tomar dos productos como maximo de cada tipo.
+
+Algoritmo(P1, P2, P3, P4, int P)
+	crearMatriz(M)
+	for i in range(n) //cantidad de objetos
+		for j in range(P)
+			if (j == 0)
+				M[i,j] = 0
+			if (i == 0)
+				if (Pi.Precio <= j)
+					M[i,j] = Pi.Precio * Pi.Descuento
+				else
+					M[i,j] = 0
+			else
+				if (Pi.Precio <= j)
+					M[i,j] = max(M[i-1,j-Pi.Precio] + Pi.Precio*Pi.Descuento, M[i-1,j])
+				else
+					M[i,j] = M[i-1,j]
+	return M[n,P]
+	
+O(n*P)	
+	
+	
+EJERCICIO 3: ----------------
+
+a. Su jefe no tiene razon. el costo minimo ahora puede variar por la cantidad
+de nodos que pisas y pagas impuesto
+
+b. VERDADERO. porque si sus costos son iguales va a depender de la implementacion
+que se elija y pueden diferir. pero si son todos los costos diferentes,
+el arbol de recubrimiento minimo es unico.
+
+c. FALSO. tambien puede ser unico teniendo costos iguales, por ejemplo 4 vertices
+con 3 aristas que valgan lo mismo formando un camino.
+
+d. Con el arbol de recubrimiento minimo, asi quedan todas nuevamente
+conectadas y con el menor costo.
+
+e. Mirando el grafo y aplicando dijkstra si es necesario, partiendo de uno
+de los nodos. porque el arbol de recubrimiento minimo puede omitir
+costos menores entre dos nodos especificos.
+
+
+EJERCICIO 4: ----------------
+
+Ordeno los numeros de menor a mayor y cambio el signo de los primeros hasta
+encontrar un numero positivo, cuando lo encuentre, le cambio el signo solo a ese.
+
+es greedy porque hay un numero que se quiere maximizar, que es la suma. hay un
+conjunto de candidatos que son los elementos de A, una funcion seleccion que
+elije el menor numero para cambiarle el signo y una funcion factibilidad que se fija
+que el numero elejido para cambiar signo sea negativo. La funcion solucion
+
+-7 -1 12 16
+
+Algoritmo(int[] A, int q) {
+        for(int i = 0; i < 2; i++){
+            if (q == 0){
+                break;
+            }else if (i == 2-1) {
+                for (int j = 0; j < q; j++)
+                    A[i] = A[i] * -1;
+            }else
+                A[i] = A[i] * -1;
+            q--;
+        }
+        return A;
+    }
+		
+	
+

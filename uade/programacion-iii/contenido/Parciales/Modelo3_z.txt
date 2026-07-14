@@ -1,0 +1,60 @@
+EJERCICIO 1.
+  A: a = 5 /divide
+	 b = 2
+	 k = 1
+	 (a > b^k) --- O(n^log2(5)) SEGUNDO MEJOR
+  B: a = 2 /subtract
+	 b = 1
+	 k = 0
+	 (a > 1) --- O(2^n) MUY MALO
+  C: a = 9 /divide
+	 b = 3
+	 k = 2
+	 (a = b^k) --- O(n^2 log n) MEJOR
+
+EJERCICIO 2.
+	comentar una mitad, si hay error buscas en la segunda mitad recursivamente,
+	si no hay error, descomentas esa mitad y buscas el error en esa mitad.
+	O(log n)
+	
+EJERCICIO 3.
+	a. si M[i,j] != 2, H[i,j] = M[i,j] + max(H[i-1,j], H[i,j-1])
+		sino si M[i,j] == 2, H[i,j] = -1
+	b. Programacion dinamica, resolviendo subproblemas dependientes.
+	c.
+		Algoritmo (Matriz M)
+			crear matriz H
+			
+			for i in range(M.length)
+			
+				for j in range(M.length)
+					
+					if M[i,j] == 2
+						H[i,j] = -1
+					else if (i == 0 and j == 0)
+						H[i,j] = M[i,j]
+					else if (i == 0)
+						if H[i,j-1] != -1
+							H[i,j] = M[i,j] + H[i,j-1]
+						else
+							H[i,j] = -1
+					else if (j == 0)
+						if H[i-1,j] != -1
+							H[i,j] = M[i,j] + H[i-1,j]
+						else
+							H[i,j] = -1
+					else
+						maximo = max(H[i-1,j], H[i,j-1])
+						if maximo == -1
+							H[i,j] = -1
+						else 
+							H[i,j] = M[i,j] + maximo
+													
+EJERCICIO 4.
+	11 - 7 - 8 - 6 - 4 - 12 - 5
+	ordenar de mayor a menor intensidad
+	
+	12 - 11 -  8 - 7 -  6 - 5 - 4  intensidades
+	60 - 44 - 24 - 14 - 6 - 0 - 0  efecto
+	
+	suma = 148

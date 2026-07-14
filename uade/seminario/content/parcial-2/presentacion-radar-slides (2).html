@@ -1,0 +1,739 @@
+<title>RADAR — Competencia & Stack</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --radar-200:#8ACCE9; --radar-300:#4FB3DC; --radar-500:#0077B6; --radar-700:#004872;
+    --amber-400:#FFB347; --amber-500:#F59E0B;
+    --money-in:#10B981; --money-out:#EF4444;
+    --bg-0:#0A0F1A; --bg-1:#0F1724; --bg-2:#17202F; --bg-4:#2B3A54;
+    --line-1:rgba(255,255,255,0.06); --line-2:rgba(255,255,255,0.10);
+    --fg-1:#F4F7FB; --fg-2:#B8C3D4; --fg-3:#7E8AA0; --fg-4:#4B566B;
+    --r-md:14px; --r-lg:20px; --r-pill:999px;
+    --font-sans:'Inter',system-ui,sans-serif;
+    --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:#000;font-family:var(--font-sans);height:100%;width:100%;overflow:hidden}
+  body{display:flex;align-items:center;justify-content:center;padding-bottom:48px}
+
+  /* fixed 16:9 stage, scaled to fit the window via JS */
+  .deck{position:relative;width:1280px;height:720px;flex:0 0 auto;
+    transform-origin:center center;background:var(--bg-0);overflow:hidden}
+
+  .slide{position:absolute;inset:0;background:var(--bg-0);color:var(--fg-1);
+    padding:44px 72px;display:none;flex-direction:column;overflow:hidden}
+  .slide.active{display:flex;animation:slidein .5s cubic-bezier(0.2,0.8,0.2,1) both}
+  @keyframes slidein{from{opacity:0;transform:translateY(12px) scale(.992)}to{opacity:1;transform:none}}
+
+  /* staggered reveal of content inside the active slide */
+  .slide.active .rv{animation:rise .6s cubic-bezier(0.2,0.8,0.2,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+  /* ===== portada (cover) ===== */
+  .cover{align-items:center;justify-content:center;text-align:center;padding:0}
+  .radar-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    border:1px solid rgba(79,179,220,0.12);border-radius:50%}
+  .ring.r1{width:760px;height:760px} .ring.r2{width:560px;height:560px}
+  .ring.r3{width:380px;height:380px} .ring.r4{width:210px;height:210px;border-color:rgba(79,179,220,0.2)}
+  .sweep{position:absolute;top:50%;left:50%;width:760px;height:760px;border-radius:50%;
+    transform:translate(-50%,-50%);transform-origin:center;
+    background:conic-gradient(from 0deg, rgba(79,179,220,0.28) 0deg, rgba(79,179,220,0.05) 38deg, transparent 70deg, transparent 360deg);
+    animation:sweep 6s linear infinite}
+  @keyframes sweep{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  .core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px}
+  .core .cdot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:8px;height:8px;border-radius:50%;background:var(--radar-300);box-shadow:0 0 10px var(--radar-300)}
+  .core .cr{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:1px solid rgba(79,179,220,0.4);border-radius:50%}
+  .core .cr1{width:28px;height:28px} .core .cr2{width:54px;height:54px;border-color:rgba(79,179,220,0.25)}
+  .blip{position:absolute;top:24%;right:27%;width:13px;height:13px;border-radius:50%;
+    background:var(--radar-300);box-shadow:0 0 14px var(--radar-300);animation:blip 6s ease-in-out infinite}
+  @keyframes blip{0%,38%{opacity:.15;transform:scale(.7)}48%{opacity:1;transform:scale(1)}70%,100%{opacity:.15;transform:scale(.7)}}
+  .cover .cinner{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center}
+  .cover .rname{font-size:94px;font-weight:800;letter-spacing:0.2em;color:#fff;line-height:1;
+    text-indent:0.2em;text-shadow:0 4px 40px rgba(0,0,0,0.6)}
+  .cover .uline{width:46px;height:3px;background:var(--radar-400);border-radius:2px;margin-top:18px}
+  .cover .csub{font-size:34px;font-weight:600;color:var(--fg-2);margin-top:36px;letter-spacing:-0.01em}
+  .cover .cfoot{position:absolute;bottom:56px;left:0;right:0;text-align:center;z-index:3}
+  .cover .cfoot .l1{font-size:18px;color:var(--fg-2);font-weight:500}
+  .cover .cfoot .l2{font-family:var(--font-mono);font-size:14px;color:var(--fg-4);
+    margin-top:8px;letter-spacing:0.05em}
+
+  /* chrome */
+  .chrome{display:flex;justify-content:space-between;align-items:center;
+    font-size:13px;color:var(--fg-3);letter-spacing:0.08em}
+  .chrome .brand{display:inline-flex;align-items:center;gap:8px;font-weight:700;
+    color:var(--fg-2);letter-spacing:0.18em}
+  .chrome .brand .dot{width:9px;height:9px;border-radius:50%;
+    background:var(--radar-500);box-shadow:0 0 0 4px rgba(0,119,182,0.18)}
+  .chrome .pagenum{font-variant-numeric:tabular-nums;letter-spacing:0.1em}
+
+  /* heading */
+  .eyebrow{display:flex;align-items:center;gap:12px;margin-top:24px;
+    font-size:13px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--radar-300)}
+  .eyebrow .line{width:56px;height:2px;background:var(--radar-500)}
+  h1.title{font-size:42px;font-weight:700;letter-spacing:-0.02em;margin-top:12px;line-height:1.05}
+  .subtitle{font-size:21px;color:var(--fg-2);margin-top:8px;font-weight:400}
+
+  /* ===== matrix slide ===== */
+  .matrix{margin-top:28px;width:100%;border-collapse:separate;border-spacing:6px}
+  .matrix th,.matrix td{text-align:center;vertical-align:middle}
+  .matrix thead th{font-size:15px;font-weight:600;color:var(--fg-1);padding:14px 8px;
+    border-radius:var(--r-md);line-height:1.2;height:62px}
+  .matrix thead th.corner{background:transparent}
+  .matrix thead th.cap{background:var(--bg-2);border:1px solid var(--line-2)}
+  .matrix thead th.ocean{background:rgba(0,119,182,0.16);border:1px solid rgba(0,119,182,0.4);color:var(--radar-300)}
+  .corner .ribbon{font-size:30px;line-height:1}
+  .matrix td.prod{text-align:left;font-weight:600;font-size:17px;color:#fff;
+    background:var(--radar-700);padding:16px 20px;border-radius:var(--r-md);width:220px;white-space:nowrap}
+  .matrix td.prod .sub{display:block;font-size:12px;font-weight:400;color:var(--radar-300);
+    letter-spacing:0.02em;margin-top:2px}
+  .matrix tbody td.cell{background:var(--bg-1);border:1px solid var(--line-1);
+    border-radius:var(--r-md);height:58px;font-size:22px}
+  .mk{display:inline-flex;align-items:center;justify-content:center;
+    width:30px;height:30px;border-radius:50%;font-weight:700;font-size:16px}
+  .mk.yes{background:rgba(16,185,129,0.16);color:var(--money-in);border:1.5px solid rgba(16,185,129,0.5)}
+  .mk.part{background:rgba(245,158,11,0.14);color:var(--amber-400);border:1.5px solid rgba(245,158,11,0.45)}
+  .mk.no{color:var(--fg-4);font-size:20px}
+  .matrix tr.radar td.prod{background:var(--radar-500);
+    box-shadow:0 0 0 1px rgba(0,119,182,0.6),0 8px 28px rgba(0,119,182,0.35);font-size:18px}
+  .matrix tr.radar td.prod .sub{color:#C0E1F2}
+  .matrix tr.radar td.cell{background:rgba(0,119,182,0.10);border-color:rgba(0,119,182,0.35)}
+  .footnote{margin-top:auto;padding-top:18px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+  .ocean-note{font-size:15px;color:var(--fg-2);line-height:1.4;max-width:620px}
+  .ocean-note b{color:var(--radar-300);font-weight:600}
+  .legend{display:flex;gap:18px;font-size:12.5px;color:var(--fg-3);white-space:nowrap}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:14px;height:14px;border-radius:50%;display:inline-block}
+  .legend .l-yes{background:rgba(16,185,129,0.5)}
+  .legend .l-part{background:rgba(245,158,11,0.5)}
+  .legend .l-no{background:var(--bg-4)}
+  .src{font-size:11px;color:var(--fg-4);letter-spacing:0.04em}
+
+  /* ===== stack slide ===== */
+  .flow{flex:1;display:flex;align-items:center;justify-content:center;gap:14px;margin-top:18px}
+  .layer{flex:1;background:var(--bg-1);border:1px solid var(--line-1);border-radius:var(--r-lg);
+    padding:26px 22px;display:flex;flex-direction:column;align-items:center;gap:16px;
+    height:340px;justify-content:center;position:relative}
+  .layer .lab{font-size:12px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--fg-3)}
+  .layer .ico{width:64px;height:64px;display:flex;align-items:center;justify-content:center;
+    border-radius:18px;background:var(--bg-2);border:1px solid var(--line-2)}
+  .layer .ico svg{width:36px;height:36px;color:var(--fg-2)}
+  .layer .name{font-size:21px;font-weight:600;color:var(--fg-1);text-align:center;line-height:1.2}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .badge{font-family:var(--font-mono);font-size:13px;font-weight:500;padding:6px 12px;
+    border-radius:var(--r-pill);background:var(--bg-2);border:1px solid var(--line-2);color:var(--fg-2)}
+  .layer.hero{background:rgba(0,119,182,0.10);border-color:rgba(0,119,182,0.45);
+    box-shadow:0 0 0 1px rgba(0,119,182,0.4),0 10px 40px rgba(0,119,182,0.28)}
+  .layer.hero .ico{background:rgba(0,119,182,0.18);border-color:rgba(79,179,220,0.4)}
+  .layer.hero .ico svg{color:var(--radar-200)}
+  .layer.hero .lab{color:var(--radar-300)}
+  .layer.hero .badge{background:rgba(0,119,182,0.16);border-color:rgba(0,119,182,0.4);color:var(--radar-200)}
+  .arrow{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--radar-300)}
+  .arrow svg{width:42px;height:28px}
+  .arrow .t{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg-4)}
+  .metrics{display:flex;justify-content:center;gap:48px;margin-top:auto;padding-top:20px}
+  .metric{display:flex;align-items:baseline;gap:10px}
+  .metric .n{font-family:var(--font-mono);font-size:34px;font-weight:600;color:var(--fg-1);font-variant-numeric:tabular-nums}
+  .metric .n.amber{color:var(--amber-400)}
+  .metric .l{font-size:14px;color:var(--fg-3)}
+
+  /* ===== marco conceptual (ansoff-style) ===== */
+  .mc{flex:1;position:relative;display:grid;grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr;gap:18px;margin-top:18px}
+  .qpanel{background:var(--bg-1);border:1px solid var(--line-1);border-radius:16px;
+    display:flex;align-items:center;gap:18px;position:relative;overflow:hidden}
+  .qpanel::before{content:"";position:absolute;top:0;bottom:0;width:4px;background:var(--ac)}
+  .qpanel.left{flex-direction:row;text-align:left;padding:22px 90px 22px 28px}
+  .qpanel.right{flex-direction:row-reverse;text-align:right;padding:22px 28px 22px 90px}
+  .qpanel.left::before{left:0} .qpanel.right::before{right:0}
+  .qnum{font-family:var(--font-mono);font-size:48px;font-weight:700;color:var(--ac);
+    line-height:1;flex:0 0 auto;opacity:.95}
+  .qbody{display:flex;flex-direction:column;gap:7px;flex:1}
+  .qhead{display:flex;align-items:center;gap:11px}
+  .qpanel.right .qhead{flex-direction:row-reverse}
+  .qhead svg{width:26px;height:26px;color:var(--ac);flex:0 0 auto}
+  .qhead .qt{font-size:19px;font-weight:700;color:var(--fg-1);line-height:1.1}
+  .qd{font-size:13.5px;color:var(--fg-2);line-height:1.35}
+  .qd b{color:var(--fg-1);font-weight:600}
+  .hexc{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:148px;height:164px;z-index:5;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:1px;
+    background:linear-gradient(160deg,var(--bg-2),var(--bg-1));
+    clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+    box-shadow:0 0 0 7px var(--bg-0),0 0 0 8px rgba(0,119,182,.5),0 0 44px rgba(0,119,182,.35)}
+  .hexc .hxlogo{width:84px;height:84px}
+
+  /* ===== stack rows (compact horizontal rows) ===== */
+  .stackr{flex:1;display:flex;flex-direction:column;gap:12px;margin-top:22px}
+  .srow2{flex:1;display:flex;align-items:center;gap:22px;padding:0 26px;
+    background:var(--bg-1);border:1px solid var(--line-1);border-left:4px solid var(--ac);border-radius:14px}
+  .srow2 .sico{flex:0 0 auto;width:52px;height:52px;border-radius:14px;background:var(--bg-2);
+    border:1px solid var(--line-2);box-shadow:0 0 0 1px var(--ac);
+    display:flex;align-items:center;justify-content:center;color:var(--ac)}
+  .srow2 .sico svg{width:27px;height:27px}
+  .srow2 .stt{flex:0 0 150px;font-size:22px;font-weight:700;color:var(--fg-1);line-height:1.05}
+  .srow2 .schips{flex:0 0 360px;display:flex;flex-wrap:wrap;gap:7px}
+  .srow2 .schips span{font-family:var(--font-mono);font-size:12px;color:var(--fg-2);background:var(--bg-2);
+    border:1px solid var(--line-2);border-radius:var(--r-pill);padding:5px 11px}
+  .srow2 .sd{flex:1;font-size:14.5px;color:var(--fg-2);line-height:1.35}
+  .srow2 .sd b{color:var(--fg-1);font-weight:600}
+  .srow2.hero{border-color:var(--ac);background:rgba(245,158,11,.06);
+    box-shadow:0 0 0 1px rgba(245,158,11,.35),0 8px 28px rgba(245,158,11,.14)}
+  .srow2.hero .sico{box-shadow:0 0 0 1px var(--ac),0 6px 20px rgba(245,158,11,.3);background:rgba(245,158,11,.1)}
+  .srow2.hero .schips span{color:var(--amber-400);border-color:rgba(245,158,11,.4)}
+
+  /* ===== stack spine (template-style) ===== */
+  .spine{flex:1;display:grid;grid-template-columns:1fr 92px 1fr;grid-auto-rows:1fr;
+    row-gap:8px;margin-top:18px;position:relative}
+  .conn{position:absolute;top:46px;bottom:46px;left:50%;width:2px;transform:translateX(-50%);
+    background:linear-gradient(var(--radar-500),var(--radar-300));opacity:.35;z-index:0}
+  .tile{grid-column:2;align-self:center;justify-self:center;position:relative;z-index:2;
+    width:80px;height:80px;border-radius:18px;background:var(--bg-2);
+    border:1px solid var(--line-2);box-shadow:0 0 0 1px var(--ac);
+    display:flex;align-items:center;justify-content:center}
+  .tile svg{width:38px;height:38px;color:var(--ac)}
+  .tile.hero{box-shadow:0 0 0 1px var(--ac),0 8px 30px rgba(245,158,11,0.3);
+    background:rgba(245,158,11,0.08)}
+  .band{align-self:center;display:flex;flex-direction:column;gap:5px;justify-content:center;
+    padding:13px 22px;background:var(--bg-1);border:1px solid var(--line-1);border-radius:14px}
+  .band.L{grid-column:1;text-align:right;border-right:3px solid var(--ac)}
+  .band.R{grid-column:3;text-align:left;border-left:3px solid var(--ac)}
+  .band .bt{font-size:19px;font-weight:700;color:var(--fg-1);line-height:1.1}
+  .band .btech{font-family:var(--font-mono);font-size:12.5px;color:var(--ac)}
+  .band .bd{font-size:13.5px;color:var(--fg-2);line-height:1.35}
+  .band .bd b{color:var(--fg-1);font-weight:600}
+
+  /* ===== problema slide (03) ===== */
+  .eyebrow.amber{color:var(--amber-400)} .eyebrow.amber .line{background:var(--amber-500)}
+  .title.two{font-size:52px;line-height:1.0;margin-top:14px}
+  .title.two .muted{color:var(--fg-4)}
+  .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:22px;flex:1;min-height:0}
+  .pcard{background:var(--bg-1);border:1px solid var(--line-1);border-radius:var(--r-lg);
+    padding:22px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+  .pcard .ftr{margin-top:auto;padding-top:18px;display:flex;align-items:center;gap:12px;
+    border-top:1px solid var(--line-1)}
+  .pcard .ftr .fi{width:34px;height:34px;border-radius:10px;background:rgba(0,119,182,0.14);
+    border:1px solid rgba(0,119,182,0.3);display:flex;align-items:center;justify-content:center;color:var(--radar-300)}
+  .pcard .ftr .fi svg{width:18px;height:18px}
+  .pcard .ftr .ft{font-size:21px;font-weight:700;color:var(--fg-1)}
+
+  /* fragmentación chips */
+  .chips{flex:1;position:relative;min-height:185px}
+  .chip{position:absolute;display:inline-flex;align-items:center;gap:9px;
+    background:var(--bg-2);border:1px solid var(--line-2);border-radius:var(--r-pill);
+    padding:9px 16px;font-size:15px;font-weight:600;color:var(--fg-1);box-shadow:0 6px 16px rgba(0,0,0,0.3)}
+  .chip i{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .chip.usd{border-color:rgba(245,158,11,0.5);color:var(--amber-400)}
+  .chip.usd .num{font-family:var(--font-mono);font-weight:600;color:var(--fg-1)}
+
+  /* sin registro list */
+  .txlist{flex:1;display:flex;flex-direction:column}
+  .tx{display:flex;align-items:center;gap:14px;padding:11px 2px;border-bottom:1px solid var(--line-1)}
+  .tx:last-child{border-bottom:none}
+  .tx .ti{width:30px;height:30px;color:var(--fg-3);flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+  .tx .ti svg{width:22px;height:22px}
+  .tx .tmid{flex:1}
+  .tx .tn{font-size:16px;font-weight:600;color:var(--fg-1);line-height:1.2}
+  .tx .ts{font-size:12px;color:var(--fg-3)}
+  .tx .q{font-size:22px;font-weight:600;color:var(--fg-4)}
+  .tx.dim .tn,.tx.dim .ts{color:var(--fg-4)}
+
+  /* chat */
+  .chat{flex:1;display:flex;flex-direction:column;gap:12px;padding-top:4px}
+  .chat .chead{display:flex;align-items:center;gap:11px;padding-bottom:12px;border-bottom:1px solid var(--line-1)}
+  .av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;color:#fff;flex:0 0 auto}
+  .chat .ct{font-size:15px;font-weight:700;color:var(--fg-1);line-height:1.1}
+  .chat .cst{font-size:12px;color:var(--radar-300)}
+  .msg{display:flex;align-items:flex-end;gap:9px;max-width:88%}
+  .msg.me{align-self:flex-end;flex-direction:row-reverse}
+  .bub{background:var(--bg-2);border:1px solid var(--line-2);border-radius:14px;
+    padding:9px 14px;font-size:14px;color:var(--fg-1)}
+  .msg.me .bub{background:rgba(0,119,182,0.18);border-color:rgba(0,119,182,0.4)}
+  .bub.typing{display:inline-flex;align-items:center;gap:5px;padding:11px 14px}
+  .bub.typing i{width:7px;height:7px;border-radius:50%;background:var(--fg-3);display:inline-block;
+    animation:typedot 1.4s ease-in-out infinite}
+  .bub.typing i:nth-child(2){animation-delay:.2s}
+  .bub.typing i:nth-child(3){animation-delay:.4s}
+  @keyframes typedot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+
+  /* footer stats */
+  .pstats{margin-top:auto;padding-top:14px;border-top:1px solid var(--line-1);
+    display:flex;align-items:baseline;gap:40px}
+  .pstat{display:flex;align-items:baseline;gap:8px}
+  .pstat .pn{font-family:var(--font-mono);font-size:34px;font-weight:700;color:var(--fg-1);
+    font-variant-numeric:tabular-nums;line-height:1}
+  .pstat .pn .pc{font-size:20px}
+  .pstat.hot .pn{color:var(--amber-400)}
+  .pstat .pl{font-size:16px;color:var(--fg-3)}
+  .pstats .psrc{margin-left:auto;font-size:13px;color:var(--fg-4);letter-spacing:0.06em;align-self:center}
+
+  /* ===== idea slide (06) ===== */
+  .idea{flex:1;display:flex;align-items:center;gap:56px;margin-top:10px}
+  .phone{flex:0 0 auto;width:300px;height:600px;border-radius:42px;background:#0B121E;
+    border:9px solid #1b2433;box-shadow:0 24px 60px rgba(0,0,0,0.6),0 0 0 1px rgba(0,119,182,0.25);
+    padding:14px 12px;display:flex;flex-direction:column;gap:9px;overflow:hidden;position:relative;transform:scale(.92)}
+  .phone .sb{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--fg-2);padding:2px 8px}
+  .phone .sb .r{display:flex;gap:5px;align-items:center}
+  .ph-hi{display:flex;justify-content:space-between;align-items:center;padding:2px 4px}
+  .ph-hi .h{font-size:17px;font-weight:700;color:var(--fg-1)}
+  .ph-hi .av{width:26px;height:26px;font-size:10px;background:var(--radar-400)}
+  .bal{background:var(--bg-2);border:1px solid var(--line-2);border-radius:16px;padding:14px}
+  .bal .bl{font-size:9px;letter-spacing:0.14em;color:var(--fg-3);text-transform:uppercase}
+  .bal .bn{font-family:var(--font-mono);font-size:26px;font-weight:700;color:var(--money-in);margin-top:3px}
+  .bal .bu{font-size:11px;color:var(--fg-3);margin-top:1px}
+  .bal .bp{display:flex;gap:7px;margin-top:10px}
+  .bal .bp span{font-size:10px;padding:4px 9px;border-radius:var(--r-pill)}
+  .bal .bp .in{background:rgba(16,185,129,0.14);color:var(--money-in)}
+  .bal .bp .out{background:rgba(239,68,68,0.14);color:var(--money-out-2,#F87171)}
+  .qa{display:flex;justify-content:space-between;padding:2px}
+  .qa .q1{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:9px;color:var(--fg-3)}
+  .qa .q1 .qc{width:42px;height:42px;border-radius:13px;background:var(--bg-2);border:1px solid var(--line-2);
+    display:flex;align-items:center;justify-content:center;color:var(--fg-2)}
+  .qa .q1 .qc svg{width:18px;height:18px}
+  .ph-sec{display:flex;justify-content:space-between;align-items:baseline;padding:0 2px}
+  .ph-sec .s{font-size:12px;font-weight:700;color:var(--fg-1)}
+  .ph-sec .v{font-size:10px;color:var(--radar-300)}
+  .gchips{display:flex;gap:6px}
+  .gchip{font-size:9px;color:var(--fg-2);background:var(--bg-2);border:1px solid var(--line-2);
+    border-radius:var(--r-pill);padding:4px 9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ecard{background:var(--bg-1);border:1px solid var(--line-1);border-radius:14px;padding:4px 12px}
+  .erow{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--line-1)}
+  .erow:last-child{border-bottom:none}
+  .erow .ec{width:30px;height:30px;border-radius:50%;flex:0 0 auto;
+    display:flex;align-items:center;justify-content:center}
+  .erow .ec svg{width:15px;height:15px}
+  .erow .em{flex:1;min-width:0}
+  .erow .en{font-size:11.5px;font-weight:500;color:var(--fg-1);line-height:1.15;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .erow .es{font-size:9.5px;color:var(--fg-3)}
+  .erow .ev{font-family:var(--font-mono);font-size:11.5px;font-weight:600;color:var(--money-out)}
+  .insight{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:14px;
+    background:rgba(0,119,182,0.08);border:1px solid rgba(0,119,182,0.20)}
+  .insight .isp{color:var(--radar-300);flex:0 0 auto;display:flex} .insight .isp svg{width:16px;height:16px}
+  .insight .itx{flex:1;font-size:10.5px;line-height:1.35;color:var(--fg-2)}
+  .insight .ich{color:var(--fg-3);font-size:15px;flex:0 0 auto}
+  .tabbar{margin-top:auto;display:flex;justify-content:space-between;padding:8px 4px 2px;border-top:1px solid var(--line-1)}
+  .tabbar .tb{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:8px;color:var(--fg-4)}
+  .tabbar .tb.on{color:var(--radar-300)}
+  .tabbar .tb svg{width:17px;height:17px}
+
+  .idea-r{flex:1}
+  .idea-r .it{font-size:52px;font-weight:700;letter-spacing:-0.02em;line-height:1.02;color:var(--fg-1)}
+  .idea-r .ist{font-size:21px;color:var(--fg-3);margin-top:10px}
+  .feats{margin-top:38px;display:flex;flex-direction:column;gap:24px}
+  .feat{display:flex;align-items:center;gap:18px}
+  .feat .fc{width:46px;height:46px;border-radius:12px;background:rgba(0,119,182,0.14);
+    border:1px solid rgba(0,119,182,0.3);display:flex;align-items:center;justify-content:center;
+    color:var(--radar-300);flex:0 0 auto}
+  .feat .fc svg{width:24px;height:24px}
+  .feat .fx{font-size:20px;color:var(--fg-1);font-weight:500}
+
+  /* ===== deck nav ===== */
+  .nav{position:fixed;bottom:8px;left:50%;transform:translateX(-50%);z-index:50;
+    display:flex;align-items:center;gap:14px;z-index:10}
+  .nav button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line-2);
+    background:rgba(15,23,36,0.7);color:var(--fg-2);font-size:16px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+  .nav button:hover{color:var(--fg-1);border-color:var(--radar-500)}
+  .nav .dots{display:flex;gap:8px}
+  .nav .d{width:8px;height:8px;border-radius:50%;background:var(--fg-4);cursor:pointer;transition:all .2s}
+  .nav .d.active{background:var(--radar-400);width:26px;border-radius:4px}
+</style>
+
+<div class="deck">
+
+  <!-- ===== SLIDE 0 · PORTADA ===== -->
+  <section class="slide cover active">
+    <div class="radar-bg">
+      <span class="ring r1"></span><span class="ring r2"></span>
+      <span class="ring r3"></span><span class="ring r4"></span>
+      <span class="sweep"></span>
+      <span class="core"><span class="cr cr2"></span><span class="cr cr1"></span><span class="cdot"></span></span>
+      <span class="blip"></span>
+    </div>
+    <div class="cinner">
+      <div class="rname rv">RADAR</div>
+      <div class="uline rv"></div>
+      <div class="csub rv">El gestor de gastos que ve lo que vos no ves</div>
+    </div>
+    <div class="cfoot rv">
+      <div class="l1">Seminario de Integración Profesional · Grupo 02</div>
+      <div class="l2">Martinez Vidal · Mayán · Moreno&nbsp;&nbsp;·&nbsp;&nbsp;Parcial II — 22/06/2026</div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 1 · EL PROBLEMA ===== -->
+  <section class="slide">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">EL PROBLEMA</span>
+    </div>
+    <div class="eyebrow"><span class="line"></span>El problema</div>
+    <h1 class="title two"><span class="muted">No es desorden.</span> Es un sistema fragmentado.</h1>
+
+    <div class="three">
+      <!-- card: fragmentación -->
+      <div class="pcard">
+        <div class="chips">
+          <span class="chip" style="top:6px;left:8px;transform:rotate(-4deg)"><i style="background:#009EE3"></i>Mercado Pago</span>
+          <span class="chip" style="top:0;right:6px;transform:rotate(3deg)"><i style="background:#FF6B35"></i>Ualá</span>
+          <span class="chip" style="top:78px;left:42px;transform:rotate(-2deg)"><i style="background:#F5A623"></i>Galicia</span>
+          <span class="chip" style="top:70px;right:14px;transform:rotate(4deg)"><i style="background:#7B2FF7"></i>Brubank</span>
+          <span class="chip" style="top:150px;left:6px;transform:rotate(2deg)"><i style="background:#EC0000"></i>Santander</span>
+          <span class="chip" style="top:150px;right:18px;transform:rotate(-3deg)"><i style="background:#FF5A00"></i>Naranja X</span>
+          <span class="chip usd" style="top:212px;left:64px;transform:rotate(-2deg)"><i style="background:#F59E0B"></i>US$ <span class="num">221</span></span>
+        </div>
+        <div class="ftr">
+          <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M16 12h.01M2 10h20"/></svg></span>
+          <span class="ft">Fragmentación</span>
+        </div>
+      </div>
+
+      <!-- card: sin registro -->
+      <div class="pcard">
+        <div class="txlist">
+          <div class="tx"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v7a3 3 0 0 0 6 0V3M7 3v18M17 3c-1.5 0-3 1.5-3 5s1.5 4 3 4v9"/></svg></span><div class="tmid"><div class="tn">Café Martínez</div><div class="ts">Hoy · Mercado Pago</div></div><span class="q">?</span></div>
+          <div class="tx"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l1.5-5a2 2 0 0 1 2-1.5h7a2 2 0 0 1 2 1.5L20 13M5 13h14v4H5zM7 17v2M17 17v2"/></svg></span><div class="tmid"><div class="tn">Uber al centro</div><div class="ts">Hoy · Visa</div></div><span class="q">?</span></div>
+          <div class="tx"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h2l2.5 12h12l2-8H6"/></svg></span><div class="tmid"><div class="tn">Chango en Coto</div><div class="ts">Ayer · Ualá</div></div><span class="q">?</span></div>
+          <div class="tx"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="10,9 16,12 10,15" fill="currentColor" stroke="none"/></svg></span><div class="tmid"><div class="tn">Spotify Premium</div><div class="ts">Ayer · Visa</div></div><span class="q">?</span></div>
+          <div class="tx dim"><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1-4h16l1 4M4 9h16v11H4zM4 9c0 2 16 2 16 0"/></svg></span><div class="tmid"><div class="tn">Kiosco de la esquina</div><div class="ts">Antes de ayer · Efectivo</div></div><span class="q">?</span></div>
+        </div>
+        <div class="ftr">
+          <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20"/></svg></span>
+          <span class="ft">Sin registro</span>
+        </div>
+      </div>
+
+      <!-- card: compartidos a pulmón -->
+      <div class="pcard">
+        <div class="chat">
+          <div class="chead">
+            <span class="av" style="background:#2DD4BF">BR</span>
+            <div><div class="ct">La banda de radar</div><div class="cst">Magalí está escribiendo…</div></div>
+          </div>
+          <div class="msg"><span class="av" style="background:#10B981;width:28px;height:28px;font-size:11px">F</span><span class="bub">¿cuánto te debo de la pizza?</span></div>
+          <div class="msg me"><span class="bub">Ni idea… fijate vos</span></div>
+          <div class="msg"><span class="av" style="background:#7B2FF7;width:28px;height:28px;font-size:11px">M</span><span class="bub typing"><i></i><i></i><i></i></span></div>
+        </div>
+        <div class="ftr">
+          <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 6a3 3 0 0 1 0 6M18 20a6 6 0 0 0-3-5.2"/></svg></span>
+          <span class="ft">Compartidos a pulmón</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pstats">
+      <div class="pstat"><span class="pn">+70<span class="pc">%</span></span><span class="pl">paga digital</span></div>
+      <div class="pstat"><span class="pn">+80<span class="pc">%</span></span><span class="pl">usa el móvil</span></div>
+      <div class="pstat"><span class="pn">+60<span class="pc">%</span></span><span class="pl">gasta en grupo</span></div>
+      <div class="pstat hot"><span class="pn">+100<span class="pc">%</span></span><span class="pl">inflación anual</span></div>
+      <span class="psrc">BCRA · GSMA · Statista</span>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE · MARCO CONCEPTUAL ===== -->
+  <section class="slide">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">MARCO CONCEPTUAL</span>
+    </div>
+    <div class="eyebrow"><span class="line"></span>Marco conceptual</div>
+    <h1 class="title">Cuatro lentes, un problema.</h1>
+
+    <div class="mc">
+      <div class="hexc">
+        <svg class="hxlogo" viewBox="0 0 96 96" fill="none">
+          <circle cx="48" cy="48" r="44" stroke="#0077B6" stroke-width="2" opacity="0.25"/>
+          <circle cx="48" cy="48" r="30" stroke="#0077B6" stroke-width="2" opacity="0.45"/>
+          <circle cx="48" cy="48" r="16" stroke="#0077B6" stroke-width="2" opacity="0.7"/>
+          <path d="M48 48 L48 4 A44 44 0 0 1 87.1 70.1 Z" fill="url(#sweep)" opacity="0.85">
+            <animateTransform attributeName="transform" type="rotate" from="0 48 48" to="360 48 48" dur="4.5s" repeatCount="indefinite"/>
+          </path>
+          <circle cx="66" cy="32" r="4" fill="#4FB3DC"><animate attributeName="opacity" values="0.2;1;0.2" dur="4.5s" repeatCount="indefinite"/></circle>
+          <circle cx="66" cy="32" r="9" fill="#4FB3DC" opacity="0.22"><animate attributeName="opacity" values="0.05;0.3;0.05" dur="4.5s" repeatCount="indefinite"/></circle>
+          <circle cx="48" cy="48" r="3" fill="#0077B6"/>
+          <defs><linearGradient id="sweep" x1="48" y1="4" x2="88" y2="70" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#0077B6" stop-opacity="0"/><stop offset="1" stop-color="#0077B6" stop-opacity="0.55"/>
+          </linearGradient></defs>
+        </svg>
+      </div>
+
+      <!-- 01 · Fragmentación financiera (top-left) -->
+      <div class="qpanel left" style="--ac:#4FB3DC">
+        <span class="qnum">01</span>
+        <div class="qbody">
+          <div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg><span class="qt">Fragmentación financiera</span></div>
+          <div class="qd">El dinero repartido entre billeteras y bancos <b>impide una visión unificada</b>.</div>
+        </div>
+      </div>
+
+      <!-- 02 · Economía conductual (top-right) -->
+      <div class="qpanel right" style="--ac:#F59E0B">
+        <span class="qnum">02</span>
+        <div class="qbody">
+          <div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg><span class="qt">Economía conductual</span></div>
+          <div class="qd">El registro manual es una fricción que <b>rompe el hábito</b> (cashless effect).</div>
+        </div>
+      </div>
+
+      <!-- 03 · Inteligencia financiera (bottom-left) -->
+      <div class="qpanel left" style="--ac:#EC4899">
+        <span class="qnum">03</span>
+        <div class="qbody">
+          <div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span class="qt">Inteligencia financiera</span></div>
+          <div class="qd"><b>Ver para poder decidir</b>: la visibilidad es la base de toda decisión.</div>
+        </div>
+      </div>
+
+      <!-- 04 · Jobs To Be Done (bottom-right) -->
+      <div class="qpanel right" style="--ac:#10B981">
+        <span class="qnum">04</span>
+        <div class="qbody">
+          <div class="qhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><span class="qt">Jobs To Be Done</span></div>
+          <div class="qd">Qué <b>"trabajo" contrata</b> el usuario al elegir una app de gastos.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 2 · LA IDEA ===== -->
+  <section class="slide">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">LA IDEA</span>
+    </div>
+    <div class="eyebrow amber"><span class="line"></span>La idea</div>
+
+    <div class="idea">
+      <!-- phone mockup — fiel a radar-app /app/(protected)/(tabs)/index.tsx -->
+      <div class="phone">
+        <div class="sb"><span class="t">23:20</span><span class="r">
+          <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+          <svg width="16" height="12" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 16.5h.01"/><path d="M2 7a15 15 0 0 1 20 0"/><path d="M5 10.5a10 10 0 0 1 14 0"/><path d="M8.5 13.8a5 5 0 0 1 7 0"/></svg>
+          <span class="bt">37</span>
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="currentColor" opacity="0.5"/><rect x="2" y="2" width="7.6" height="8" rx="1.5" fill="currentColor"/><path d="M23.5 4.2v3.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.5"/></svg>
+        </span></div>
+        <div class="ph-hi"><span class="h">Hola, Facu</span><span class="av">FM</span></div>
+        <div class="bal">
+          <div class="bl">Balance del mes</div>
+          <div class="bn">+$ 421.450,00</div>
+          <div class="bu">+US$ 221,02</div>
+          <div class="bp"><span class="in">Ingresos $ 1.523.000,00</span><span class="out">Gastos $ 1.101.550,00</span></div>
+        </div>
+        <div class="qa">
+          <div class="q1"><span class="qc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>Agregar</div>
+          <div class="q1"><span class="qc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Grupos</div>
+          <div class="q1"><span class="qc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5 6.3 6.3a2.4 2.4 0 0 1 0 3.4L17 19"/><path d="M9.586 5.586A2 2 0 0 0 8.172 5H3a1 1 0 0 0-1 1v5.172a2 2 0 0 0 .586 1.414L8.29 18.29a2.426 2.426 0 0 0 3.42 0l3.58-3.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="6.5" cy="9.5" r=".5" fill="currentColor"/></svg></span>Categorías</div>
+          <div class="q1"><span class="qc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span>Ingresos</div>
+        </div>
+        <div class="ph-sec"><span class="s">Mis grupos</span><span class="v">Ver todos</span></div>
+        <div class="gchips"><span class="gchip">La banda de radar · 2 miembros</span><span class="gchip">Depto compañeros · 3 m…</span></div>
+        <div class="ph-sec"><span class="s">Últimos gastos</span><span class="v">Ver todos</span></div>
+        <div class="ecard">
+          <div class="erow"><span class="ec" style="background:rgba(245,158,11,0.12);color:#F59E0B"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2s2-.9 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Z"/></svg></span><div class="em"><div class="en">Coto</div><div class="es">Comida · ayer</div></div><span class="ev">$ 38.500,00</span></div>
+          <div class="erow"><span class="ec" style="background:rgba(79,179,220,0.14);color:#4FB3DC"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg></span><div class="em"><div class="en">Internet Fibertel</div><div class="es">Servicios · hace 2 días</div></div><span class="ev">$ 16.200,00</span></div>
+          <div class="erow"><span class="ec" style="background:rgba(123,47,247,0.16);color:#A78BFA"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><div class="em"><div class="en">Spotify Premium</div><div class="es">Ocio · hace 2 días</div></div><span class="ev">US$ 5,99</span></div>
+        </div>
+        <div class="tabbar">
+          <div class="tb on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>Inicio</div>
+          <div class="tb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg>Gastos</div>
+          <div class="tb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg>Ingresos</div>
+          <div class="tb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>Cámara</div>
+          <div class="tb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/><circle cx="12" cy="12" r="10"/></svg>Insights</div>
+        </div>
+      </div>
+
+      <!-- right text -->
+      <div class="idea-r">
+        <div class="it">Simplicidad con inteligencia</div>
+        <div class="ist">El espacio vacío entre el cuaderno y la billetera.</div>
+        <div class="feats">
+          <div class="feat"><span class="fc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M16 12h.01M2 10h20"/></svg></span><span class="fx">Seguimiento personal unificado de todo tu dinero</span></div>
+          <div class="feat"><span class="fc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 19a6 6 0 0 1 12 0M17 6a3 3 0 0 1 0 6"/></svg></span><span class="fx">Gastos compartidos integrados — sin el grupo de WhatsApp</span></div>
+          <div class="feat"><span class="fc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.5C14 8.5 13 8 12 8c-1.5 0-2.5 1-2.5 2s1 1.6 2.5 2 2.5 1 2.5 2-1 2-2.5 2c-1 0-2-.5-2.5-1.5M12 6.5v11"/></svg></span><span class="fx">Multi-moneda ARS / USD con conversión automática</span></div>
+          <div class="feat"><span class="fc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12 7.7L3 21l1.8-6A8.5 8.5 0 1 1 21 11.5z"/></svg></span><span class="fx">IA + registro conversacional por WhatsApp</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 3 · MATRIZ COMPETITIVIDAD ===== -->
+  <section class="slide">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">ANÁLISIS DE COMPETENCIA</span>
+    </div>
+    <div class="eyebrow"><span class="line"></span>Benchmarking · Análisis de mercado</div>
+    <h1 class="title">Matriz de competitividad.</h1>
+    <p class="subtitle">RADAR frente a los competidores directos del mercado.</p>
+
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th class="corner"><span class="ribbon">🏆</span></th>
+          <th class="cap">Facilidad<br>de registro</th>
+          <th class="cap">Categorización<br>automática</th>
+          <th class="cap">Dashboards<br>y reportes</th>
+          <th class="ocean">Registro por<br>foto (IA)</th>
+          <th class="ocean">Insights y detección<br>de anomalías</th>
+          <th class="ocean">Integración con<br>bot de WhatsApp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="radar">
+          <td class="prod">RADAR<span class="sub">Nuestra propuesta</span></td>
+          <td class="cell"><span class="mk yes">✓</span></td>
+          <td class="cell"><span class="mk yes">✓</span></td>
+          <td class="cell"><span class="mk part">~</span></td>
+          <td class="cell"><span class="mk yes">✓</span></td>
+          <td class="cell"><span class="mk yes">✓</span></td>
+          <td class="cell"><span class="mk yes">✓</span></td>
+        </tr>
+        <tr>
+          <td class="prod">Wallet<span class="sub">BudgetBakers</span></td>
+          <td class="cell"><span class="mk part">~</span></td>
+          <td class="cell"><span class="mk part">~</span></td>
+          <td class="cell"><span class="mk yes">✓</span></td>
+          <td class="cell"><span class="mk no">—</span></td>
+          <td class="cell"><span class="mk no">—</span></td>
+          <td class="cell"><span class="mk no">—</span></td>
+        </tr>
+        <tr>
+          <td class="prod">Spendee</td>
+          <td class="cell"><span class="mk part">~</span></td>
+          <td class="cell"><span class="mk part">~</span></td>
+          <td class="cell"><span class="mk yes">✓</span></td>
+          <td class="cell"><span class="mk no">—</span></td>
+          <td class="cell"><span class="mk no">—</span></td>
+          <td class="cell"><span class="mk no">—</span></td>
+        </tr>
+        <tr>
+          <td class="prod">Monefy</td>
+          <td class="cell"><span class="mk yes">✓</span></td>
+          <td class="cell"><span class="mk part">~</span></td>
+          <td class="cell"><span class="mk part">~</span></td>
+          <td class="cell"><span class="mk no">—</span></td>
+          <td class="cell"><span class="mk no">—</span></td>
+          <td class="cell"><span class="mk no">—</span></td>
+        </tr>
+        <tr>
+          <td class="prod">Mercado Pago</td>
+          <td class="cell"><span class="mk yes">✓</span></td>
+          <td class="cell"><span class="mk part">~</span></td>
+          <td class="cell"><span class="mk part">~</span></td>
+          <td class="cell"><span class="mk no">—</span></td>
+          <td class="cell"><span class="mk no">—</span></td>
+          <td class="cell"><span class="mk no">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="footnote">
+      <p class="ocean-note">
+        <b>Espacio blanco (océano azul):</b> registro por foto con IA, insights y detección de anomalías,
+        e integración con bot de WhatsApp — ningún competidor las ofrece hoy.
+      </p>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+        <div class="legend">
+          <span><i class="l-yes"></i>Lo resuelve</span>
+          <span><i class="l-part"></i>Parcial</span>
+          <span><i class="l-no"></i>No lo ofrece</span>
+        </div>
+        <span class="src">Fuente: benchmarking propio · curva de valor RADAR</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SLIDE 2 · STACK TECNOLÓGICO ===== -->
+  <section class="slide">
+    <div class="chrome">
+      <span class="brand"><span class="dot"></span>RADAR</span>
+      <span class="pagenum">STACK TECNOLÓGICO</span>
+    </div>
+    <div class="eyebrow"><span class="line"></span>Cómo lo construimos</div>
+    <h1 class="title">El stack, capa por capa.</h1>
+
+    <div class="stackr">
+      <!-- 1 · Front -->
+      <div class="srow2" style="--ac:#4FB3DC">
+        <div class="sico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2.5"/><path d="M12 18h.01"/></svg></div>
+        <div class="stt">Front</div>
+        <div class="schips"><span>Expo</span><span>React Native</span><span>TypeScript</span><span>Expo Router</span></div>
+        <div class="sd">App nativa <b>iOS, Android y web</b> desde un único monorepo Expo.</div>
+      </div>
+
+      <!-- 2 · Back -->
+      <div class="srow2" style="--ac:#4FB3DC">
+        <div class="sico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2.5"/><path d="M9 7h6M9 11h6M9 15h3"/></svg></div>
+        <div class="stt">Back</div>
+        <div class="schips"><span>Expo monorepo</span><span>TypeScript</span><span>Edge Functions</span></div>
+        <div class="sd">Lógica y APIs en el <b>mismo monorepo</b> que el front.</div>
+      </div>
+
+      <!-- 3 · Datos / nube -->
+      <div class="srow2" style="--ac:#4FB3DC">
+        <div class="sico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></div>
+        <div class="stt">Datos &amp; nube</div>
+        <div class="schips"><span>Supabase</span><span>PostgreSQL</span><span>RLS</span><span>Auth OTP</span></div>
+        <div class="sd">Base de datos y servicios en la nube (<b>BaaS</b>), seguridad por fila.</div>
+      </div>
+
+      <!-- 4 · IA — hero -->
+      <div class="srow2 hero" style="--ac:#F59E0B">
+        <div class="sico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.962 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg></div>
+        <div class="stt">IA</div>
+        <div class="schips"><span>Groq</span><span>LLaMA-4 Scout</span></div>
+        <div class="sd"><b>Escaneo de tickets y transferencias</b>, insights y recomendaciones de ahorro.</div>
+      </div>
+
+      <!-- 5 · Integraciones -->
+      <div class="srow2" style="--ac:#4FB3DC">
+        <div class="sico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8"/></svg></div>
+        <div class="stt">Integraciones</div>
+        <div class="schips"><span>Twilio WhatsApp</span><span>Groq API</span><span>Expo Notifications</span></div>
+        <div class="sd"><b>Bot de WhatsApp</b>: registrar gastos por chat, foto o audio.</div>
+      </div>
+
+      <!-- 6 · Dev -->
+      <div class="srow2" style="--ac:#4FB3DC">
+        <div class="sico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div class="stt">Dev</div>
+        <div class="schips"><span>OpenSpec</span><span>plugin dev</span><span>Jest</span><span>GitHub Actions</span><span>EAS</span></div>
+        <div class="sd">Desarrollo <b>spec-driven</b> con tests automáticos y CI/CD.</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- nav — fuera del deck, fija al borde de la ventana -->
+<div class="nav">
+  <button id="prev" aria-label="Anterior">‹</button>
+  <div class="dots" id="dots"></div>
+  <button id="next" aria-label="Siguiente">›</button>
+</div>
+
+<script>
+  const deck=document.querySelector('.deck');
+  function fit(){const s=Math.min(window.innerWidth/1280,(window.innerHeight-48)/720)*0.96;
+    deck.style.transform='scale('+s+')';}
+  window.addEventListener('resize',fit);fit();
+
+  const slides=[...document.querySelectorAll('.slide')];
+  const dotsWrap=document.getElementById('dots');
+  let cur=0;
+  slides.forEach((_,i)=>{const d=document.createElement('span');d.className='d'+(i===0?' active':'');
+    d.onclick=()=>go(i);dotsWrap.appendChild(d);});
+  const dots=[...dotsWrap.children];
+  function go(i){cur=(i+slides.length)%slides.length;
+    slides.forEach((s,k)=>s.classList.toggle('active',k===cur));
+    dots.forEach((d,k)=>d.classList.toggle('active',k===cur));}
+  document.getElementById('next').onclick=()=>go(cur+1);
+  document.getElementById('prev').onclick=()=>go(cur-1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')go(cur+1);
+    if(e.key==='ArrowLeft'||e.key==='PageUp')go(cur-1);});
+</script>

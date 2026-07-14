@@ -1,0 +1,99 @@
+EJERCICIO 1:
+Algoritmo (int[] V)
+	if (ini > fin)
+		return fin
+	else
+		mid = (ini + fin) / 2 
+		if (ini < mid && V[mid] < V[mid - 1])
+			return mid
+		else if (fin > mid && V[mid] > V[mid + 1])
+			return mid + 1
+		else if(V[ini] < V[mid])
+			return Algoritmo(V, mid+1, fin)
+		else
+			return Algoritmo(V, ini, min-1)
+			
+EJERCICIO 2:
+presupuesto P = 10
+(p)  3 9 5 3 gramos
+(c)  4 1 2 4 calorias por gramo
+(v)  6 7 9 7 precio
+
+Algoritmo(int[][] G)
+	crearmatriz(M)
+	for i in range (G[0].length)
+		for j in range (P+1)
+			if (j == 0)
+				M[i,j] = 0
+			else if (v[i] <= j)
+				if (i == 0)
+					M[i,j] = M[ i, j-v[i] ] + p[i]*c[i]
+				else
+					M[i,j] = max( M[ i, j-v[i] ] + p[i]*c[i], M[i-1, j] )
+			else
+				if (i == 0)
+					M[i,j] = 0
+				else
+					M[i,j] = M[i-1, j]
+O(n*P)
+
+EJERCICIO 3:	
+es greedy
+Peso maximo por contenedor: P = 10			
+ 9  8  7  6  5  4  3  O objetos (peso de cada uno) ordenado de mayor a menor
+-1 -1 -1 -1 -1 -1 -1  S (numero del contenedor)
+ 0  0  0  0  0  0  0  C contenedores (peso acumulado)
+ 
+Algoritmo(int[] O, P)
+	crear arreglo S con n posiciones lleno de -1
+	crear arreglo C con n posiciones lleno de 0 // conjunto de candidatos
+	for i in range(n)
+		for j in range(i)             // funcion seleccion siempre el objeto mas pesado
+			if (C[j] + O[i] <= P && j < min)  // funcion factibilidad
+				min = j //guardamos el primer contenedor anterior que entre el objeto
+		S[i] = j
+		C[j] += O[i]
+
+O(n2)
+
+EJERCICIO 4:
+
+a) FALSO un grafo no dirigido podria tener 4 vertices y 3 aristas que los unen.
+estas 3 aristas son necesarias para que sea un arbol de recubrimiento minimo
+es decir que la arista de mayor peso va a mantenerse en la solucion.
+
+b) VERDADERO ambos arboles de recubrimiento minimo podrian ser diferentes en
+cuanto a que vertices se conectan y de que forma lo hacen, pero el costo total
+debe ser igual en ambas implementaciones.
+
+c) VERDADERO en Kruskal si se tomaria esta arista de menor costo primera, y 
+en Prim puede que esa arista no se tome por el hecho de haber el elegido 
+aleatoriamente el primer vertice por el que comenzar, pero luego se incluira.
+Propiedad de corte.
+
+d) FALSO el arbol de recubrimiento minimo te da las aristas de menor costo,
+pero suponga un ciclo de A 10 B 20 C 30 D y de A a D 40. esa ultima arista se
+saca para el arbol de recubrimiento minimo, pero si quisieramos el menor costo
+de A a D no es 10+20+30, sino que es 40.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

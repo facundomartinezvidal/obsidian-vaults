@@ -1,0 +1,14 @@
+{
+  "spellcheckLanguages": [
+    "es",
+    "en-US"
+  ],
+  "spellcheck": true,
+  "pdfExportSettings": {
+    "includeName": false,
+    "pageSize": "A4",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  }
+}
