@@ -1,2 +1,13 @@
 # PDFs
 *.pdf
+
+# macOS
+.DS_Store
+
+# Python venv (programacion-iii/playground)
+**/playground/lib/
+**/playground/bin/
+**/playground/pyvenv.cfg
+**/playground/.idea/
+**/__pycache__/
+*.pyc
