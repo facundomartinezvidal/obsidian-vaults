@@ -1,0 +1,202 @@
+{
+  "main": {
+    "id": "1d8d79df04636eab",
+    "type": "split",
+    "children": [
+      {
+        "id": "b86fb3c5e3a62a35",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "038c42839ead6996",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "uade/tecnologia-e-innovacion/CLAUDE.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "CLAUDE"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "bd494fbd5b35d38f",
+    "type": "split",
+    "children": [
+      {
+        "id": "1a792aaa10369190",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e7075e1cc9b71fdf",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "757aedc5d46345b7",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "40393ebedd6ac461",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "2afe8b817be34a17",
+    "type": "split",
+    "children": [
+      {
+        "id": "abe8f94b47579b5d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f2c14d30dbcf2938",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "uade/tecnologia-e-innovacion/CLAUDE.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for CLAUDE"
+            }
+          },
+          {
+            "id": "411f67b933ad2a88",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "uade/tecnologia-e-innovacion/CLAUDE.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from CLAUDE"
+            }
+          },
+          {
+            "id": "ab3e24448b5ee1e9",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "23ea9a87a759a988",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "f4c550d2120540e4",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "uade/tecnologia-e-innovacion/CLAUDE.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of CLAUDE"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "038c42839ead6996",
+  "lastOpenFiles": [
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/09-clase-14-comunicacion-efectiva.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/08-clase-14-marketing.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/07-clase-14-marcas-y-posicionamiento.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/06-clase-14-metodologias-agiles.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/05-clase-13-analisis-financiero-y-estrategias-de-salida.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/04-clase-financiamiento-proyectos-tech.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/03-clase-mercados.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/02-clase-10-11-kpi-okr.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/01-clase-09-matrices-para-la-toma-de-decisiones.pdf",
+    "uade/tecnologia-e-innovacion/content/primer-parcial/06-clase-05-estrategias.pdf",
+    "uade/tecnologia-e-innovacion/content/primer-parcial/05-clase-04-propuesta-de-valor-y-segmentacion.pdf",
+    "uade/Welcome.md",
+    "uade/tecnologia-e-innovacion/CLAUDE.md"
+  ]
+}
