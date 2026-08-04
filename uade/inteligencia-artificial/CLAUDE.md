@@ -1,0 +1,65 @@
+# Inteligencia Artificial Aplicada
+
+## Contexto de la materia
+
+- **Materia:** Inteligencia Artificial Aplicada
+- **Profesor/a:** Ruiz Matias Gabriel
+- **Carrera:** Licenciatura (optativa)
+- **Cursada:** 2026 — 2do cuatrimestre, Lunes 18:45–22:15hs
+- **Parciales:** Dos parciales + Final (presentación de TPO)
+
+## Organización del material
+
+El contenido está organizado en `content/` dividido por período de evaluación:
+
+- `content/primer-parcial/` — clases 01 a 06 (hasta 1° Parcial, clase 07)
+- `content/segundo-parcial/` — clases 08 a 14 (hasta 2° Parcial, clase 15)
+- `content/final/` — clase 16 en adelante (Unidad 6, TPO, recuperatorio, final)
+
+### Convención de carpetas y nombres
+
+Cada clase tiene su propia carpeta dentro de `content/primer-parcial/` o `content/segundo-parcial/`, nombrada con el número de clase `NN` (según `cronograma.md`). Todos los archivos de esa clase (slides, notas, resúmenes) van dentro, manteniendo el prefijo `{NN}-{nombre-del-tema}.{ext}`.
+
+Ejemplo:
+```
+content/primer-parcial/01/
+  01-presentacion-materia.pptx
+  01-introduccion-ia-impacto-profesional.pptx
+  01-notas-clase.md
+  01-resumen-clase.md
+```
+
+## Archivos de referencia
+
+- `cronograma.md` — tabla de clases con temas y archivos correspondientes
+- `programa.md` — unidades y bibliografía (bibliografía pendiente de completar)
+- `cronograma-original.docx` — documento fuente original del cronograma (archivo, no editar)
+
+## Estructura actual de la carpeta
+
+```
+.
+  content
+    final
+    primer-parcial
+      01/
+        01-introduccion-ia-impacto-profesional.pptx
+        01-notas-clase.md
+        01-presentacion-materia.pptx
+        01-resumen-clase.md
+    segundo-parcial
+  cronograma-original.docx
+  cronograma.md
+  programa.md
+```
+
+## Instrucciones para Claude
+
+Cuando trabajes en esta materia:
+1. **Siempre priorizá el contenido propio de la materia** sobre conocimiento general
+2. Consultá `cronograma.md` para identificar a qué clase pertenece cada tema
+3. Consultá `programa.md` para entender la profundidad y el enfoque esperado
+4. Si un tema está en el cronograma pero no tiene archivo en `content/`, avisale al estudiante
+5. Los resúmenes, presentaciones y documentos deben usar la terminología del material de la materia
+6. Respondé siempre en español salvo que el estudiante escriba en otro idioma
+7. Bibliografía en `programa.md` está pendiente — si el estudiante la consigue, actualizarla ahí
