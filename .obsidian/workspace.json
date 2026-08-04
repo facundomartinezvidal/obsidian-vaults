@@ -1,24 +1,24 @@
 {
   "main": {
-    "id": "618ebc3a92397a2b",
+    "id": "1d8d79df04636eab",
     "type": "split",
     "children": [
       {
-        "id": "09a7e265fef430f9",
+        "id": "b86fb3c5e3a62a35",
         "type": "tabs",
         "children": [
           {
-            "id": "a3b2015032613ecf",
+            "id": "038c42839ead6996",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "bna/csharp/02-introduccion-a-csharp/08-programacion-funcional.md",
+                "file": "uade/tecnologia-e-innovacion/CLAUDE.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "08-programacion-funcional"
+              "title": "CLAUDE"
             }
           }
         ]
@@ -27,15 +27,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "25b66f7a8082d937",
+    "id": "bd494fbd5b35d38f",
     "type": "split",
     "children": [
       {
-        "id": "832da0b68bce968e",
+        "id": "1a792aaa10369190",
         "type": "tabs",
         "children": [
           {
-            "id": "7d9c4a744060fa74",
+            "id": "e7075e1cc9b71fdf",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -48,7 +48,7 @@
             }
           },
           {
-            "id": "b945f5c6d03bd672",
+            "id": "757aedc5d46345b7",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -65,7 +65,7 @@
             }
           },
           {
-            "id": "627ec64ce5fae081",
+            "id": "40393ebedd6ac461",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -81,20 +81,20 @@
     "width": 300
   },
   "right": {
-    "id": "234a552ff36b3385",
+    "id": "2afe8b817be34a17",
     "type": "split",
     "children": [
       {
-        "id": "7d10d5520a337432",
+        "id": "abe8f94b47579b5d",
         "type": "tabs",
         "children": [
           {
-            "id": "27f2461a85c531d5",
+            "id": "f2c14d30dbcf2938",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "uade/ciencia-de-datos/content/1-parcial/01-material-introduccion-data-science.pdf",
+                "file": "uade/tecnologia-e-innovacion/CLAUDE.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,25 +104,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for 01-material-introduccion-data-science"
+              "title": "Backlinks for CLAUDE"
             }
           },
           {
-            "id": "99eb1a400d03d662",
+            "id": "411f67b933ad2a88",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "uade/ciencia-de-datos/content/1-parcial/01-material-introduccion-data-science.pdf",
+                "file": "uade/tecnologia-e-innovacion/CLAUDE.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from 01-material-introduccion-data-science"
+              "title": "Outgoing links from CLAUDE"
             }
           },
           {
-            "id": "0b4de30cceb4e327",
+            "id": "ab3e24448b5ee1e9",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -137,7 +137,7 @@
             }
           },
           {
-            "id": "283388c99048e095",
+            "id": "23ea9a87a759a988",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -151,18 +151,18 @@
             }
           },
           {
-            "id": "6e6186a1784f2bd9",
+            "id": "f4c550d2120540e4",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "uade/ciencia-de-datos/content/1-parcial/01-material-introduccion-data-science.pdf",
+                "file": "uade/tecnologia-e-innovacion/CLAUDE.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 01-material-introduccion-data-science"
+              "title": "Outline of CLAUDE"
             }
           }
         ]
@@ -183,45 +183,20 @@
       "bases:Create new base": false
     }
   },
-  "active": "a3b2015032613ecf",
+  "active": "038c42839ead6996",
   "lastOpenFiles": [
-    "bna/csharp/02-introduccion-a-csharp/09-struct.md",
-    "bna/csharp/02-introduccion-a-csharp/00-clases-y-objetos.md",
-    "bna/csharp/02-introduccion-a-csharp/10-records.md",
-    "bna/csharp/02-introduccion-a-csharp/08-programacion-funcional.md",
-    "uade/inteligencia-artificial/content/primer-parcial/01/Clase 1- Actividad en clase.pdf",
-    "uade/inteligencia-artificial/content/primer-parcial/01/Actividad grupal - Desarrollo de Software.pdf",
-    "uade/inteligencia-artificial/content/primer-parcial/01/Presentacion IA Desarrollo.html",
-    "uade/inteligencia-artificial/content/primer-parcial/01/Clase 1 - Actividad grupal - Desarrollo de Software.pdf",
-    "uade/inteligencia-artificial/content/primer-parcial/01/01-resumen-clase.md",
-    "uade/inteligencia-artificial/content/primer-parcial/Clase 1- Actividad en clase.pdf",
-    "uade/inteligencia-artificial/programa.md",
-    "uade/inteligencia-artificial/content/primer-parcial/01-resumen-clase.md",
-    "uade/inteligencia-artificial/content/primer-parcial/01/01-presentacion-materia.pptx",
-    "uade/inteligencia-artificial/content/primer-parcial/01/01-notas-clase.md",
-    "uade/inteligencia-artificial/content/primer-parcial/01/01-introduccion-ia-impacto-profesional.pptx",
-    "uade/inteligencia-artificial/content/primer-parcial/01",
-    "uade/inteligencia-artificial/content/primer-parcial/~$01-presentacion-materia.pptx",
-    "uade/inteligencia-artificial/content/primer-parcial/01-resumen.md",
-    "uade/inteligencia-artificial/content/primer-parcial/01-notas-clase.md",
-    "bna/csharp/02-introduccion-a-csharp/07-json.md",
-    "uade/inteligencia-artificial/CLAUDE.md",
-    "uade/inteligencia-artificial/cronograma-original.docx",
-    "uade/inteligencia-artificial/cronograma.md",
-    "bna/csharp/02-introduccion-a-csharp/06-expression-bodied-members.md",
-    "bna/csharp/02-introduccion-a-csharp/04-genericos.md",
-    "bna/csharp/03-json/00-json.md",
-    "bna/csharp/02-introduccion-a-csharp/05-tostring.md",
-    "bna/csharp/02-introduccion-a-csharp/03-interfaces.md",
-    "bna/csharp/02-introduccion-a-csharp/02-herencia.md",
-    "bna/csharp/02-introduccion-a-csharp/01-var.md",
-    "bna/csharp/00-introduccion/01-http.md",
-    "bna/csharp/03-introduccion-a-csharp/00-clases-y-objetos.md",
-    "bna/csharp/00-introduccion.md",
-    "bna/csharp/00-introduccion/00-estructura-request-response.md",
-    "bna/01-introduccion.md",
-    "uade/ciencia-de-datos/parciales/1-parcial/parcial-tema-2.jpg",
-    "uade/ciencia-de-datos/parciales/1-parcial/parcial-tema-1.jpg",
-    "uade/ciencia-de-datos/parciales/2-parcial/parcial-tema-2.jpg"
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/09-clase-14-comunicacion-efectiva.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/08-clase-14-marketing.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/07-clase-14-marcas-y-posicionamiento.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/06-clase-14-metodologias-agiles.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/05-clase-13-analisis-financiero-y-estrategias-de-salida.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/04-clase-financiamiento-proyectos-tech.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/03-clase-mercados.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/02-clase-10-11-kpi-okr.pdf",
+    "uade/tecnologia-e-innovacion/content/segundo-parcial/01-clase-09-matrices-para-la-toma-de-decisiones.pdf",
+    "uade/tecnologia-e-innovacion/content/primer-parcial/06-clase-05-estrategias.pdf",
+    "uade/tecnologia-e-innovacion/content/primer-parcial/05-clase-04-propuesta-de-valor-y-segmentacion.pdf",
+    "uade/Welcome.md",
+    "uade/tecnologia-e-innovacion/CLAUDE.md"
   ]
 }

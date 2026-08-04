@@ -23,18 +23,18 @@ Evaluación: 2 parciales + TPO Integrador (Plan de Negocios en equipo, condició
 - C3 — Marcos y metodologías de Innovación · `03-clase-03-marcos-de-innovacion.pdf`
 - C4 — Business Model Canvas / Propuesta de Valor y Segmentación · `04-clase-04-business-model-canvas.pdf`, `05-clase-04-propuesta-de-valor-y-segmentacion.pdf`
 - C5 — Estrategias (comercial y de negocios) · `06-clase-05-estrategias.pdf`
-- C6 — Pensamiento divergente/convergente, Design Thinking, Service Design, Fail Culture
+- C6 — Pensamiento divergente/convergente, Design Thinking, Service Design, Fail Culture · `07-clase-06-fail-culture.mp4`
 - C7 — Estrategia comercial, introducción al marketing
 - Estado: vista
 
 ### Segundo parcial (Clases 9–14)
 - C9 — Matrices para la toma de decisiones · `content/segundo-parcial/01-clase-09-matrices-para-la-toma-de-decisiones.pdf`
-- C10–C11 — Lean StartUp, mindset, métricas, clientes, transformación digital
-- Mercados · `02-clase-mercados.pdf` · Financiamiento para proyectos tech · `03-clase-financiamiento-proyectos-tech.pdf`
-- C13 — Análisis financiero y estrategias de salida (VAN/TIR/Payback) · `04-clase-13-analisis-financiero-y-estrategias-de-salida.pdf`
-- C14 — Metodologías ágiles (Scrum, Kanban), marketing, comunicación efectiva · `05-clase-14-metodologias-agiles.pdf`, `06-clase-14-agilidad.pdf`, `07-clase-14-marketing.pdf`, `08-clase-14-comunicacion-efectiva.pdf`
+- C10–C11 — Lean StartUp, mindset, métricas, clientes, transformación digital (KPI/OKR) · `02-clase-10-11-kpi-okr.pdf`
+- Mercados · `03-clase-mercados.pdf` · Financiamiento para proyectos tech · `04-clase-financiamiento-proyectos-tech.pdf`
+- C13 — Análisis financiero y estrategias de salida (VAN/TIR/Payback) · `05-clase-13-analisis-financiero-y-estrategias-de-salida.pdf`
+- C14 — Metodologías ágiles (Scrum, Kanban), marcas y posicionamiento, marketing, comunicación efectiva · `06-clase-14-metodologias-agiles.pdf`, `07-clase-14-marcas-y-posicionamiento.pdf`, `08-clase-14-marketing.pdf`, `09-clase-14-comunicacion-efectiva.pdf`
 - Estado: en curso
-- ⚠️ Orden de Mercados / Financiamiento / Marketing es aproximado (los PDF no traen nº de clase) — ajustar si corresponde.
+- ⚠️ Orden de Mercados / Financiamiento es aproximado (los PDF no traen nº de clase) — ajustar si corresponde.
 
 ## TPO — Plan de Negocios (proyecto PetConnect)
 

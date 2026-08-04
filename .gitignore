@@ -1,6 +1,10 @@
 # PDFs
 *.pdf
 
+# Audio/video
+*.mp3
+*.mp4
+
 # macOS
 .DS_Store
 
