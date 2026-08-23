@@ -6,7 +6,7 @@
 | Clase | Fecha | Tema | Archivo |
 |-------|-------|------|---------|
 | 01 | 3/8 | Unidad I. Introducción a la IA y su impacto profesional | 01-introduccion-ia-impacto-profesional.pptx |
-| 02 | 10/8 | Prácticas: ejercicios de generación de contenido | 02-ejercicios-generacion-contenido.ext |
+| 02 | 10/8 | Prácticas: ejercicios de generación de contenido | 02-tipos-de-prompt.pptx |
 | 03 | 17/8 | FERIADO | — |
 | 03b | 22/8 | Clase remota sincrónica (9-13hs). Articulación con certificación: conceptos clave del ecosistema GenAI | 03b-ecosistema-genai.ext |
 | 04 | 24/8 | Unidad 2. Herramientas de IA para la productividad | 04-herramientas-ia-productividad.ext |

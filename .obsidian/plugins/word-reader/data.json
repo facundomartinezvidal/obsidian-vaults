@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "common": {
+    "language": "zh-CN",
+    "defaultZoomPercent": 100,
+    "largeFileWarningMb": 25
+  },
+  "docx": {
+    "defaultFitWidth": false,
+    "showOutlineByDefault": true,
+    "enableImagePreview": true
+  },
+  "pptx": {
+    "defaultFitWindow": true,
+    "showNavigationByDefault": true,
+    "showNotesByDefault": false
+  },
+  "xlsx": {
+    "defaultFitWidth": true
+  },
+  "readingStates": [
+    {
+      "path": "uade/proceso-desarrollo-software/content/primer-parcial/01-introduccion.pptx",
+      "mtime": 1785885900000,
+      "format": "pptx",
+      "lastAccessed": 3,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "page": 3
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": [],
+        "notesVisible": false
+      }
+    }
+  ]
+}

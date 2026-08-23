@@ -47,6 +47,28 @@ content/primer-parcial/01/
         01-notas-clase.md
         01-presentacion-materia.pptx
         01-resumen-clase.md
+        Actividad grupal - Desarrollo de Software.pdf
+        Clase 1- Actividad en clase.pdf
+        Presentacion IA Desarrollo.html
+      02/
+        02-tipos-de-prompt.pptx
+        prompt-battle/
+          02-actividad-prompt-battle.md
+          02-entrega-prompt-battle.md
+          02-entrega-prompt-battle.pdf
+          02-nivel2-copilot-arquitectura.pdf
+          02-nivel2-gemini-arquitectura.md
+          02-nivel3-copilot-arquitectura.pdf
+          02-nivel3-gemini-arquitectura.md
+          02-nivel3-gemini-arquitectura.pdf
+        generacion-contenido/
+          02-actividad-generacion-contenido.md
+          02-entrega-generacion-contenido.md
+          02-generacion-contenido-carrera.pdf
+          02-nivel1-claude-landing-exelior.html
+          02-nivel2-claude-landing-exelior.html
+          02-nivel2-lovable-landing-exelior.html
+          02-nivel2.1-claude-landing-exelior.html
     segundo-parcial
   cronograma-original.docx
   cronograma.md
