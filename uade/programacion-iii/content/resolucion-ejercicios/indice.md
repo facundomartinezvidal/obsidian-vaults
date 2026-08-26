@@ -19,6 +19,7 @@ Resoluciones de la guía de ejercitación (`content/guia-ejercicios.pdf`), un ar
 
 ## Greedy
 
-| # | Ejercicio | Estado |
-|---|-----------|--------|
-| 1 | [[greedy-01-planificacion-tareas-plazo-fijo]] — planificación con plazo fijo | en construcción |
+| # | Ejercicio | Complejidad |
+|---|-----------|-------------|
+| 1 | [[greedy-01-planificacion-tareas-plazo-fijo]] — planificación con plazo fijo | O(n²) |
+| 2 | [[greedy-02-minimizar-tiempo-espera]] — orden de atención de procesos | O(n log n) |
