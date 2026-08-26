@@ -40,9 +40,16 @@ El número `NN` corresponde al número de clase en el `cronograma.md`.
   .agents
   .claude
   content
-    Resolucion Ejercicios.md
     cronograma-oficial.pdf
     guia-ejercicios.pdf
+    resolucion-ejercicios/                  # una nota .md por ejercicio (a: estrategia, b: pseudocódigo, c: complejidad)
+      indice.md                             # MOC con enlaces a todos los ejercicios
+      convencion-pseudocodigo.md            # estilo de pseudocódigo de la cátedra
+      divide-y-conquista-01-secuencia-ordenada.md
+      divide-y-conquista-02-potencia-de-dos.md
+      divide-y-conquista-03-punto-fijo.md
+      divide-y-conquista-04-kesimo-menor.md
+      greedy-01-planificacion-tareas-plazo-fijo.md
     primer-parcial
       01-introduccion-divide-y-conquista.pdf
       02-ordenacion-quicksort-mergesort.pdf
