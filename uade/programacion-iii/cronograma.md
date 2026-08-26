@@ -8,7 +8,7 @@
 |-------|-------|------|---------|
 | 01 | 5/8 | Introducción al Análisis y Técnicas de Diseño de Algoritmos. Definiciones, propiedades, complejidad, recurrencias. Introducción a divide y conquista: búsqueda binaria, palabra palíndromo | 01-introduccion-divide-y-conquista.pdf |
 | 02 | 12/8 | Divide y Conquista. Recursividad. Algoritmos de búsqueda. Métodos de ordenamiento: QuickSort y MergeSort | 02-ordenacion-quicksort-mergesort.pdf |
-| 03 | 19/8 | Divide y Conquista — Fibonacci. Revisión final de ejercicios. Introducción a Greedy: Problema del Cambio, Problema de la Mochila | |
+| 03 | 19/8 | Divide y Conquista — Fibonacci. Revisión final de ejercicios. Introducción a Greedy: Problema del Cambio, Problema de la Mochila | 03-fibonacci-introduccion-greedy.pdf |
 | 04 | 26/8 | Continuación Greedy — Huffman. Revisión de ejercicios de Greedy | |
 | 05 | 2/9 | Algoritmos de Grafos dirigidos: caminos de mínimo peso. Dijkstra | |
 | 06 | 5/9 | (Clase remota sincrónica 9–13hs) Algoritmos de Grafos no dirigidos: árboles de recubrimiento. Prim y Kruskal | |

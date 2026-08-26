@@ -46,7 +46,9 @@ El número `NN` corresponde al número de clase en el `cronograma.md`.
     primer-parcial
       01-introduccion-divide-y-conquista.pdf
       02-ordenacion-quicksort-mergesort.pdf
+      03-fibonacci-introduccion-greedy.pdf
     segundo-parcial
+  Stuff/            # proyecto Java/Maven (ejercicios), no material de clase
   cronograma.md
   programa.md
 ```
