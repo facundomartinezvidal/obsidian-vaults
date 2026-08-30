@@ -84,18 +84,15 @@ El algoritmo es **iterativo** (no recursivo), así que no hay recurrencia ni Mas
 |--------|-------|---------------|
 | `Ordenar(T)` | O(n log n) | ordenamiento por comparación de las n tareas |
 | `para` que calcula `maxPlazo` | O(n) | un recorrido de las n tareas |
-| `para` que inicializa `R` | O(maxPlazo) | un recorrido de los `maxPlazo` instantes |
-| bucle anidado | O(n · maxPlazo) | `para` externo: n vueltas (una por tarea). `mientras` interno, peor caso: retrocede desde `T[i].t` hasta 1 → hasta `maxPlazo` vueltas |
+| `para` que inicializa `R` | O(n) | recorre `maxPlazo` instantes, y solo tiene sentido tener `maxPlazo ≤ n` (nunca se ubican más de `n` tareas; instantes mayores a `n` quedan siempre vacíos) |
+| bucle anidado | O(n²) | ver abajo |
 
-**Acotación de `maxPlazo`:** nunca se ubican más de `n` tareas, entonces los instantes mayores a `n` siempre quedan vacíos y no aportan. El `maxPlazo` efectivo es `≤ n`. Con esto:
+**Bucle anidado.** El `para` externo hace exactamente `n` vueltas (una por tarea). El `mientras` interno **solo retrocede sobre instantes ocupados** y corta apenas toca un `0`: como se ubican a lo sumo `n` tareas, hay a lo sumo `n` instantes ocupados, así que el interno hace **O(n)** vueltas en el peor caso — **no** O(maxPlazo).
 
-- inicialización de `R` → O(n)
-- bucle anidado → O(n²)
+`n · O(n)` → **O(n²)**.
 
-Sumando: `O(n log n) + O(n) + O(n) + O(n²)`. El término dominante es el bucle anidado:
+Peor caso concreto: todas las tareas con plazo grande y los instantes se van saturando; la `k`-ésima tarea encuentra ocupados los instantes de arriba y retrocede ~`k−1` posiciones → `0 + 1 + … + (n−1) = n(n−1)/2`.
+
+Sumando `O(n log n) + O(n) + O(n) + O(n²)`, el término dominante es el bucle anidado:
 
 **T(n) = O(n²)**
-
-(El peor caso se da cuando todas las tareas tienen plazos grandes y los instantes se van saturando: la tarea k-ésima retrocede ~k−1 posiciones → `0 + 1 + ... + (n−1) = n(n−1)/2`.)
-
-> Si no se acota `maxPlazo` por `n` y se lo deja como parámetro independiente `t`, la complejidad se expresa como **O(n log n + n·t)**.

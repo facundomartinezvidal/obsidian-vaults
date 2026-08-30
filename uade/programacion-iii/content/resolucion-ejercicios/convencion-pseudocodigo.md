@@ -13,6 +13,7 @@ Todo el pseudocódigo de estas resoluciones sigue el estilo de las presentacione
 - Comentarios con `//`.
 - Todo en español (nombres de funciones, variables y comentarios). Funciones auxiliares en CamelCase: `Ordenar(O)`, `Pivot(S, inicio, fin)`.
 - Índices: se usan tanto base 0 (`para i = 0 hasta n-1`) como base 1 (`llamada inicial BuscarPuntoFijo(A, 1, n)`); elegir uno y ser consistente dentro del mismo algoritmo.
+- Tamaños implícitos: `n` se entiende como el tamaño de la entrada (no se declara), y el tamaño de un vector de salida se deduce del `para` que lo llena (ver `ALGORITMO MOCHILA`: usa `para i = 0 hasta n-1` sin declarar `n` ni dimensionar `R`).
 
 > [!warning] Pendiente
 > [[divide-y-conquista-01-secuencia-ordenada]] y [[divide-y-conquista-02-potencia-de-dos]] todavía están escritos en un estilo previo (`function` / `return` / camelCase en inglés) y quedan pendientes de adaptar a esta convención.

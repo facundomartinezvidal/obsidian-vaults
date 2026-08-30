@@ -4,37 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "fcba6bc2c8cd4066",
+        "id": "b946f09b3ef384b9",
         "type": "tabs",
         "children": [
           {
-            "id": "c378635dba3011cc",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "uade/programacion-iii/content/Resolucion Ejercicios.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Resolucion Ejercicios"
-            }
-          },
-          {
-            "id": "209b26216f9b337c",
-            "type": "leaf",
-            "state": {
-              "type": "pdf",
-              "state": {
-                "file": "uade/programacion-iii/content/primer-parcial/02-ordenacion-quicksort-mergesort.pdf"
-              },
-              "icon": "lucide-file-text",
-              "title": "02-ordenacion-quicksort-mergesort"
-            }
-          },
-          {
-            "id": "57b4e8ec1eb7c083",
+            "id": "57aa4202a2a3b871",
             "type": "leaf",
             "state": {
               "type": "pdf",
@@ -43,6 +17,34 @@
               },
               "icon": "lucide-file-text",
               "title": "guia-ejercicios"
+            }
+          },
+          {
+            "id": "3f9e9874603ed2dc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "uade/programacion-iii/content/resolucion-ejercicios/greedy-01-planificacion-tareas-plazo-fijo.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "greedy-01-planificacion-tareas-plazo-fijo"
+            }
+          },
+          {
+            "id": "6810b8db8ffc0444",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "uade/programacion-iii/content/resolucion-ejercicios/greedy-02-minimizar-tiempo-espera.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "greedy-02-minimizar-tiempo-espera"
             }
           }
         ]
@@ -210,20 +212,27 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "c378635dba3011cc",
+  "active": "57aa4202a2a3b871",
   "lastOpenFiles": [
+    "uade/programacion-iii/content/resolucion-ejercicios/greedy-01-planificacion-tareas-plazo-fijo.md",
+    "uade/programacion-iii/content/guia-ejercicios.pdf",
+    "uade/programacion-iii/content/resolucion-ejercicios/greedy-02-minimizar-tiempo-espera.md",
+    "uade/programacion-iii/content/primer-parcial/03-fibonacci-introduccion-greedy.pdf",
+    "uade/programacion-iii/content/primer-parcial/01-introduccion-divide-y-conquista.pdf",
+    "uade/programacion-iii/content/resolucion-ejercicios/divide-y-conquista-03-punto-fijo.md",
+    "uade/programacion-iii/content/resolucion-ejercicios/divide-y-conquista-02-potencia-de-dos.md",
+    "uade/programacion-iii/content/resolucion-ejercicios/divide-y-conquista-01-secuencia-ordenada.md",
+    "uade/programacion-iii/content/Resolucion Ejercicios.md",
+    "uade/programacion-iii/content/resolucion-ejercicios/indice.md",
+    "uade/programacion-iii/content/resolucion-ejercicios/divide-y-conquista-04-kesimo-menor.md",
+    "uade/programacion-iii/content/resolucion-ejercicios/convencion-pseudocodigo.md",
+    "uade/programacion-iii/content/resolucion-ejercicios",
+    "uade/programacion-iii/content/Clase-19-08-2026.pdf",
+    "uade/programacion-iii/content/primer-parcial/02-ordenacion-quicksort-mergesort.pdf",
     "uade/programacion-iii/Stuff/src/main/java/org/example/services/ProductService2.java",
     "uade/programacion-iii/Stuff/src/main/java/org/example/services/IProductService.java",
     "uade/programacion-iii/Stuff/src/main/java/org/example/repositories/IProductRepository.java",
     "uade/programacion-iii/Stuff/src/main/java/org/example/services/ProductService.java",
-    "uade/programacion-iii/Stuff/src/main/java/org/example/entities/Product.java",
-    "uade/programacion-iii/Stuff/src/main/java/org/example/controller/ProductController.java",
-    "uade/programacion-iii/Stuff/src/main/java/org/example/repositories",
-    "uade/programacion-iii/Stuff/src/main/java/org/example/entities",
-    "uade/programacion-iii/Stuff/src/main/java/org/example/controller",
-    "uade/programacion-iii/Stuff/src/main/java/org/example/services",
-    "uade/programacion-iii/Stuff/pom.xml",
-    "uade/programacion-iii/content/Resolucion Ejercicios.md",
     "uade/programacion-iii/CLAUDE.md",
     "uade/programacion-iii/cronograma.md",
     "uade/programacion-iii/programa.md",
@@ -240,14 +249,6 @@
     "uade/inteligencia-artificial/content/primer-parcial/02/02-nivel3-gemini-arquitectura.md",
     "uade/inteligencia-artificial/content/primer-parcial/02/02-nivel2-gemini-arquitectura.md",
     "bna/clean-architecture/07-componentes/00-que-son-los-componentes.md",
-    "bna/clean-architecture/07-componentes/06-stable-abstractions-principle.md",
-    "bna/clean-architecture/07-componentes/05-stable-dependencies-principle.md",
-    "bna/clean-architecture/07-componentes/04-acyclic-dependencies-principle.md",
-    "bna/clean-architecture/07-componentes/03-common-reuse-principle.md",
-    "bna/clean-architecture/07-componentes/02-common-closure-principle.md",
-    "bna/clean-architecture/07-componentes/01-reuse-release-equivalence-principle.md",
-    "bna/clean-architecture/06-principios-solid/04-dependency-inversion-principle.md",
-    "bna/clean-architecture/06-principios-solid/03-interface-segregation-principle.md",
     "uade/ciencia-de-datos/parciales/1-parcial/parcial-tema-2.jpg",
     "uade/ciencia-de-datos/parciales/1-parcial/parcial-tema-1.jpg",
     "uade/ciencia-de-datos/parciales/2-parcial/parcial-tema-2.jpg"
