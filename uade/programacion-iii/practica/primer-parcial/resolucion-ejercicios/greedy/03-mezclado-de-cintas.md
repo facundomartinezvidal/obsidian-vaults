@@ -1,6 +1,6 @@
 ---
 paradigma: greedy
-ejercicio: 3
+ejercicio: 2
 complejidad: O(n log n)
 estado: completo
 ---

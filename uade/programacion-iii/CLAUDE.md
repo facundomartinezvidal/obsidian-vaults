@@ -10,11 +10,13 @@
 
 ## Organización del material
 
-El contenido de la materia está organizado en la carpeta `content/` dividido por período de evaluación:
+El material está separado en dos carpetas según el tipo, y cada una dividida por período de evaluación:
 
-- `content/primer-parcial/` — clases 01 a 08 del cronograma (Introducción, Divide y Conquista, Greedy, Grafos básicos)
-- `content/segundo-parcial/` — clases 09 en adelante (Programación Dinámica, Backtracking)
-- `content/guia-ejercicios.pdf` y `content/cronograma-oficial.pdf` — material general, no ligado a una clase puntual
+- `contenido/primer-parcial/` — teoría de las clases 01 a 07 (Introducción, Divide y Conquista, Greedy, Grafos básicos)
+- `contenido/segundo-parcial/` — teoría de las clases 09 en adelante (Programación Dinámica, Backtracking)
+- `practica/primer-parcial/` — ejercicios resueltos y guías de práctica de temas de primer parcial
+- `practica/segundo-parcial/` — ejercicios resueltos y guías de práctica de temas de segundo parcial
+- `practica/guia-ejercicios-programacion-iii.pdf`, `practica/repaso-ejercicios-integradores-primer-parcial.pdf`, `practica/indice.md`, `practica/convencion-pseudocodigo.md` — material general de práctica, no ligado a un parcial puntual
 
 ### Convención de nombres de archivos
 
@@ -39,32 +41,7 @@ El número `NN` corresponde al número de clase en el `cronograma.md`.
 .
   .agents
   .claude
-  content
-    cronograma-oficial.pdf
-    guia-ejercicios.pdf
-    resolucion-ejercicios/                  # una nota .md por ejercicio (a: estrategia, b: pseudocódigo, c: complejidad), agrupadas en subcarpetas por paradigma
-      indice.md                             # MOC con enlaces a todos los ejercicios
-      convencion-pseudocodigo.md            # estilo de pseudocódigo de la cátedra
-      divide-y-conquista/
-        01-secuencia-ordenada.md
-        02-potencia-de-dos.md
-        03-punto-fijo.md
-        04-kesimo-menor.md
-      greedy/
-        01-planificacion-tareas-plazo-fijo.md
-        02-minimizar-tiempo-espera.md
-        03-mezclado-de-cintas.md
-        04-problema-del-mecanico.md
-      grafos/
-        01-cuadras-minimas-escuela-gimnasio.md
-        02-camino-minimo-con-escala.md
-      integradores/
-        01-maximizar-actividades-compatibles.md
-        02-posicion-del-pico.md
-        05-salon-de-convenciones.md
-        06-valor-inmediato-inferior.md
-        07-maximizacion-de-archivos.md
-        plantilla-ejercicio-integrador.md
+  contenido
     primer-parcial
       01-introduccion-divide-y-conquista.pdf
       02-ordenacion-quicksort-mergesort.pdf
@@ -72,8 +49,44 @@ El número `NN` corresponde al número de clase en el `cronograma.md`.
       04-continuacion-greedy-huffman.pdf
       05-grafos-dirigidos-dijkstra.pdf
       06-arboles-recubrimiento-prim-kruskal.pdf
-      07-repaso-ejercicios-integradores.pdf
-      simulacro-primer-parcial.pdf
+    segundo-parcial
+  practica
+    guia-ejercicios-programacion-iii.pdf
+    repaso-ejercicios-integradores-primer-parcial.pdf
+    indice.md                                 # MOC con enlaces a todos los ejercicios
+    convencion-pseudocodigo.md                # estilo de pseudocódigo de la cátedra
+    primer-parcial
+      ejercicios-integracion-primer-parcial.pdf
+      parcial-20-10-2023.jpg                  # simulacro adicional (inversiones, golosinas, superhéroes — Greedy), pendiente de resolver
+      resolucion-ejercicios/                  # una nota .md por ejercicio (a: estrategia, b: pseudocódigo, c: complejidad), agrupadas en subcarpetas por paradigma
+        divide-y-conquista/
+          01-secuencia-ordenada.md
+          02-potencia-de-dos.md
+          03-punto-fijo.md
+          04-kesimo-menor.md
+        greedy/
+          01-planificacion-tareas-plazo-fijo.md
+          02-minimizar-tiempo-espera.md
+          03-mezclado-de-cintas.md
+          04-problema-del-mecanico.md
+        grafos/
+          01-cuadras-minimas-escuela-gimnasio.md
+          02-camino-minimo-con-escala.md
+        integradores/
+          01-maximizar-actividades-compatibles.md
+          02-posicion-del-pico.md
+          05-salon-de-convenciones.md
+          06-valor-inmediato-inferior.md
+          07-maximizacion-de-archivos.md
+          plantilla-ejercicio-integrador.md
+        simulacro-primer-parcial/
+          01-problema-logistica.md
+          02-sistema-de-riego.md
+          03-carga-de-camiones.md
+          04-cooperativa-agricola.md
+          05-transporte-de-logistica.md
+          06.md
+          enunciado-simulacro.pdf
     segundo-parcial
   Stuff/            # proyecto Java/Maven (ejercicios), no material de clase
   cronograma.md

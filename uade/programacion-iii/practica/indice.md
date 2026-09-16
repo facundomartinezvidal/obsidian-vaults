@@ -57,3 +57,13 @@ Basados en `content/primer-parcial/simulacro-primer-parcial.pdf`. Igual que los 
 | 3 | [[03-carga-de-camiones]] — mochila fraccionaria | Greedy | O(n log n) |
 | 4 | [[04-cooperativa-agricola]] — árbol de recubrimiento mínimo, canales de riego (Tema 2) | Grafos (Kruskal) | O(n²) |
 | 5 | [[05-transporte-de-logistica]] — mochila fraccionaria (Tema 2) | Greedy | O(n log n) |
+| 6 | [[06-logistica-correo]] — fin de la rotación en arreglo (Tema 2) | Divide y Conquista | O(log n) |
+
+## Parcial 20/10/2023
+
+Simulacro adicional (`practica/primer-parcial/parcial-20-10-2023.jpg`), técnica no dada — hay que identificarla.
+
+| # | Ejercicio | Técnica | Complejidad |
+|---|-----------|---------|-------------|
+| 1 | [[01-inversiones-financieras]] — asignar ahorros entre inversiones con tope y rentabilidad, maximizando rendimiento | Greedy | O(n log n) |
+| 3 | [[03-torneo-superheroes]] — P superhéroes con menor diferencia ataque-defensa (en progreso) | Divide y Conquista | O(n) prom. / O(n²) peor |

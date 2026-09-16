@@ -12,7 +12,7 @@
 | 04 | 26/8 | Continuación Greedy — Huffman. Revisión de ejercicios de Greedy | 04-continuacion-greedy-huffman.pdf |
 | 05 | 2/9 | Algoritmos de Grafos dirigidos: caminos de mínimo peso. Dijkstra | 05-grafos-dirigidos-dijkstra.pdf |
 | 06 | 5/9 | (Clase remota sincrónica 9–13hs) Algoritmos de Grafos no dirigidos: árboles de recubrimiento. Prim y Kruskal | 06-arboles-recubrimiento-prim-kruskal.pdf |
-| 07 | 9/9 | Repaso primer parcial y ejercicios integradores | 07-repaso-ejercicios-integradores.pdf |
+| 07 | 9/9 | Repaso primer parcial y ejercicios integradores | repaso-ejercicios-integradores-primer-parcial.pdf |
 | 08 | 16/9 | **1° PARCIAL** | |
 
 ## Segundo Parcial
@@ -34,9 +34,12 @@
 
 ## Material general (no ligado a una clase puntual)
 
-- `content/guia-ejercicios.pdf` — guía de ejercitación (Divide y Conquista, Greedy)
-- `content/cronograma-oficial.pdf` — cronograma oficial de la cátedra (fuente de esta tabla)
-- `content/primer-parcial/simulacro-primer-parcial.pdf` — simulacro primer parcial (Tema 1 y Tema 2: rotación de arreglo, MST/riego, mochila fraccionaria, más ejercicios de grafos y greedy)
+- `practica/guia-ejercicios-programacion-iii.pdf` — guía de ejercitación (Divide y Conquista, Greedy)
+- `practica/repaso-ejercicios-integradores-primer-parcial.pdf` — repaso y ejercicios integradores de la clase 07
+- `practica/indice.md` — MOC con enlaces a todos los ejercicios resueltos
+- `practica/convencion-pseudocodigo.md` — estilo de pseudocódigo de la cátedra
+- `practica/primer-parcial/resolucion-ejercicios/simulacro-primer-parcial/` — simulacro primer parcial (Tema 1 y Tema 2: rotación de arreglo, MST/riego, mochila fraccionaria, más ejercicios de grafos y greedy)
+- `practica/primer-parcial/parcial-20-10-2023.jpg` — simulacro adicional (inversiones, golosinas, superhéroes — Greedy), pendiente de resolver
 
 ## Régimen de aprobación
 

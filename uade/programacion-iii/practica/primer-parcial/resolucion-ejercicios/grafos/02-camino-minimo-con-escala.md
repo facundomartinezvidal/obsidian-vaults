@@ -26,44 +26,6 @@ Una vez obtenido ese grafo de costos mínimos, una ciudad `p` **conviene alcanza
 ## b) Pseudocódigo
 
 ```
-ALGORITMO DIJKSTRA
-Entrada: G Grafo<entero>, v entero
-Salida: A Grafo<entero>
-    // Paso 1 // Conjunto de vértices ya visitados
-    Conjunto<entero> Visitados ← {v}
-    // Paso 2 // Grafo auxiliar
-    Grafo<entero> A ← inicializarGrafo()
-    para cada w ∈ Vertices(G)
-        agregarVertice(A, w)
-    fin para
-    para cada v' ∈ Adyacentes(G, v)
-        agregarArista(A, v, v', pesoArista(G, v, v'))
-    fin para
-    // Conjunto de vértices pendientes de cálculo
-    Pendientes ← Vertices(G) \ Visitados
-    // Paso 3
-    mientras Pendientes ≠ ∅
-        w ← n : pesoArista(A, v, n) = mín{pesoArista(A, v, p)} para todo n, p ∈ Pendientes
-        Visitados ← Visitados ∪ {w}
-        Pendientes ← Pendientes \ {w}
-        auxPendientes ← Pendientes
-        mientras auxPendientes ≠ ∅
-            p ← elegir(auxPendientes)
-            auxPendientes ← auxPendientes \ {p}
-            si existeArista(A, v, w) Y existeArista(G, w, p)
-                si existeArista(A, v, p)
-                    si pesoArista(A, v, w) + pesoArista(G, w, p) < pesoArista(A, v, p)
-                        agregarArista(A, v, p, pesoArista(A, v, w) + pesoArista(G, w, p))
-                    fin si
-                sino
-                    agregarArista(A, v, p, pesoArista(A, v, w) + pesoArista(G, w, p))
-                fin si
-            fin si
-        fin mientras
-    fin mientras
-    devolver A
-
-
 ALGORITMO CONVIENE_CON_ESCALA
 Entrada: G Grafo<entero>, origen entero
 Salida: Vector<Par<entero, cadena>> resultado
