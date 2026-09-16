@@ -16,4 +16,4 @@ Todo el pseudocódigo de estas resoluciones sigue el estilo de las presentacione
 - Tamaños implícitos: `n` se entiende como el tamaño de la entrada (no se declara), y el tamaño de un vector de salida se deduce del `para` que lo llena (ver `ALGORITMO MOCHILA`: usa `para i = 0 hasta n-1` sin declarar `n` ni dimensionar `R`).
 
 > [!warning] Pendiente
-> [[divide-y-conquista-01-secuencia-ordenada]] y [[divide-y-conquista-02-potencia-de-dos]] todavía están escritos en un estilo previo (`function` / `return` / camelCase en inglés) y quedan pendientes de adaptar a esta convención.
+> [[01-secuencia-ordenada]] y [[02-potencia-de-dos]] (Divide y Conquista) todavía están escritos en un estilo previo (`function` / `return` / camelCase en inglés) y quedan pendientes de adaptar a esta convención.

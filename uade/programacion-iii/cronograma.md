@@ -9,10 +9,10 @@
 | 01 | 5/8 | Introducción al Análisis y Técnicas de Diseño de Algoritmos. Definiciones, propiedades, complejidad, recurrencias. Introducción a divide y conquista: búsqueda binaria, palabra palíndromo | 01-introduccion-divide-y-conquista.pdf |
 | 02 | 12/8 | Divide y Conquista. Recursividad. Algoritmos de búsqueda. Métodos de ordenamiento: QuickSort y MergeSort | 02-ordenacion-quicksort-mergesort.pdf |
 | 03 | 19/8 | Divide y Conquista — Fibonacci. Revisión final de ejercicios. Introducción a Greedy: Problema del Cambio, Problema de la Mochila | 03-fibonacci-introduccion-greedy.pdf |
-| 04 | 26/8 | Continuación Greedy — Huffman. Revisión de ejercicios de Greedy | |
-| 05 | 2/9 | Algoritmos de Grafos dirigidos: caminos de mínimo peso. Dijkstra | |
-| 06 | 5/9 | (Clase remota sincrónica 9–13hs) Algoritmos de Grafos no dirigidos: árboles de recubrimiento. Prim y Kruskal | |
-| 07 | 9/9 | Repaso primer parcial y ejercicios integradores | |
+| 04 | 26/8 | Continuación Greedy — Huffman. Revisión de ejercicios de Greedy | 04-continuacion-greedy-huffman.pdf |
+| 05 | 2/9 | Algoritmos de Grafos dirigidos: caminos de mínimo peso. Dijkstra | 05-grafos-dirigidos-dijkstra.pdf |
+| 06 | 5/9 | (Clase remota sincrónica 9–13hs) Algoritmos de Grafos no dirigidos: árboles de recubrimiento. Prim y Kruskal | 06-arboles-recubrimiento-prim-kruskal.pdf |
+| 07 | 9/9 | Repaso primer parcial y ejercicios integradores | 07-repaso-ejercicios-integradores.pdf |
 | 08 | 16/9 | **1° PARCIAL** | |
 
 ## Segundo Parcial
@@ -36,6 +36,7 @@
 
 - `content/guia-ejercicios.pdf` — guía de ejercitación (Divide y Conquista, Greedy)
 - `content/cronograma-oficial.pdf` — cronograma oficial de la cátedra (fuente de esta tabla)
+- `content/primer-parcial/simulacro-primer-parcial.pdf` — simulacro primer parcial (Tema 1 y Tema 2: rotación de arreglo, MST/riego, mochila fraccionaria, más ejercicios de grafos y greedy)
 
 ## Régimen de aprobación
 

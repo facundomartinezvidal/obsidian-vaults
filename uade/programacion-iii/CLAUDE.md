@@ -42,18 +42,38 @@ El número `NN` corresponde al número de clase en el `cronograma.md`.
   content
     cronograma-oficial.pdf
     guia-ejercicios.pdf
-    resolucion-ejercicios/                  # una nota .md por ejercicio (a: estrategia, b: pseudocódigo, c: complejidad)
+    resolucion-ejercicios/                  # una nota .md por ejercicio (a: estrategia, b: pseudocódigo, c: complejidad), agrupadas en subcarpetas por paradigma
       indice.md                             # MOC con enlaces a todos los ejercicios
       convencion-pseudocodigo.md            # estilo de pseudocódigo de la cátedra
-      divide-y-conquista-01-secuencia-ordenada.md
-      divide-y-conquista-02-potencia-de-dos.md
-      divide-y-conquista-03-punto-fijo.md
-      divide-y-conquista-04-kesimo-menor.md
-      greedy-01-planificacion-tareas-plazo-fijo.md
+      divide-y-conquista/
+        01-secuencia-ordenada.md
+        02-potencia-de-dos.md
+        03-punto-fijo.md
+        04-kesimo-menor.md
+      greedy/
+        01-planificacion-tareas-plazo-fijo.md
+        02-minimizar-tiempo-espera.md
+        03-mezclado-de-cintas.md
+        04-problema-del-mecanico.md
+      grafos/
+        01-cuadras-minimas-escuela-gimnasio.md
+        02-camino-minimo-con-escala.md
+      integradores/
+        01-maximizar-actividades-compatibles.md
+        02-posicion-del-pico.md
+        05-salon-de-convenciones.md
+        06-valor-inmediato-inferior.md
+        07-maximizacion-de-archivos.md
+        plantilla-ejercicio-integrador.md
     primer-parcial
       01-introduccion-divide-y-conquista.pdf
       02-ordenacion-quicksort-mergesort.pdf
       03-fibonacci-introduccion-greedy.pdf
+      04-continuacion-greedy-huffman.pdf
+      05-grafos-dirigidos-dijkstra.pdf
+      06-arboles-recubrimiento-prim-kruskal.pdf
+      07-repaso-ejercicios-integradores.pdf
+      simulacro-primer-parcial.pdf
     segundo-parcial
   Stuff/            # proyecto Java/Maven (ejercicios), no material de clase
   cronograma.md

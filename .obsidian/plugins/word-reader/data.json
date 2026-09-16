@@ -38,6 +38,82 @@
         "collapsedIds": [],
         "notesVisible": false
       }
+    },
+    {
+      "path": "uade/inteligencia-artificial/cronograma-original.docx",
+      "mtime": 1785789293003,
+      "format": "docx",
+      "lastAccessed": 82,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 140
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "uade/proceso-desarrollo-software/00-cronograma-fuente.docx",
+      "mtime": 1785885900000,
+      "format": "docx",
+      "lastAccessed": 86,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 158
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": false
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": []
+      }
+    },
+    {
+      "path": "uade/inteligencia-artificial/content/primer-parcial/02/02-tipos-de-prompt.pptx",
+      "mtime": 1786400695736,
+      "format": "pptx",
+      "lastAccessed": 88,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "page": 3
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": true
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": [],
+        "notesVisible": false
+      }
+    },
+    {
+      "path": "uade/inteligencia-artificial/content/presentaciones/primer-parcial/01-introduccion-ia-impacto-profesional.pptx",
+      "mtime": 1789332560744,
+      "format": "pptx",
+      "lastAccessed": 89,
+      "position": {
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "page": 7
+      },
+      "zoom": {
+        "scale": 1,
+        "fit": true
+      },
+      "navigation": {
+        "panelVisible": true,
+        "collapsedIds": [],
+        "notesVisible": false
+      }
     }
   ]
 }

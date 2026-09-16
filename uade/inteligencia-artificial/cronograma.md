@@ -8,8 +8,8 @@
 | 01 | 3/8 | Unidad I. Introducción a la IA y su impacto profesional | 01-introduccion-ia-impacto-profesional.pptx |
 | 02 | 10/8 | Prácticas: ejercicios de generación de contenido | 02-tipos-de-prompt.pptx |
 | 03 | 17/8 | FERIADO | — |
-| 03b | 22/8 | Clase remota sincrónica (9-13hs). Articulación con certificación: conceptos clave del ecosistema GenAI | 03b-ecosistema-genai.ext |
-| 04 | 24/8 | Unidad 2. Herramientas de IA para la productividad | 04-herramientas-ia-productividad.ext |
+| 03b | 22/8 | Clase remota sincrónica (9-13hs). Articulación con certificación: conceptos clave del ecosistema GenAI | 03b-ecosistema-genai.pptx |
+| 04 | 24/8 | Unidad 2. Herramientas de IA para la productividad | 04-herramientas-ia-productividad.pptx |
 | 05 | 31/8 | Prácticas: creación de asistentes personalizados | 05-asistentes-personalizados.ext |
 | 06 | 7/9 | Articulación con certificación: casos de uso de IA generativa en organizaciones. Herramientas y plataformas de IA | 06-casos-uso-ia-generativa.ext |
 | 07 | 14/9 | **1° PARCIAL** | — |

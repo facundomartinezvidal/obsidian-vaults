@@ -41,17 +41,22 @@ content/primer-parcial/01/
 .
   content
     final
+    presentaciones/
+      primer-parcial/
+        01-introduccion-ia-impacto-profesional.pptx
+        01-presentacion-materia.pptx
+        02-tipos-de-prompt.pptx
+        03b-ecosistema-genai.pptx
+        04-herramientas-ia-productividad.pptx
+      segundo-parcial/
     primer-parcial
       01/
-        01-introduccion-ia-impacto-profesional.pptx
         01-notas-clase.md
-        01-presentacion-materia.pptx
         01-resumen-clase.md
         Actividad grupal - Desarrollo de Software.pdf
         Clase 1- Actividad en clase.pdf
         Presentacion IA Desarrollo.html
       02/
-        02-tipos-de-prompt.pptx
         prompt-battle/
           02-actividad-prompt-battle.md
           02-entrega-prompt-battle.md
@@ -69,11 +74,16 @@ content/primer-parcial/01/
           02-nivel2-claude-landing-exelior.html
           02-nivel2-lovable-landing-exelior.html
           02-nivel2.1-claude-landing-exelior.html
+      05/
+        05-actividad-automatizacion-tp.docx
+        05-entrega-automatizacion-tp.md
     segundo-parcial
   cronograma-original.docx
   cronograma.md
   programa.md
 ```
+
+Las presentaciones (`.pptx`) de todas las clases viven en `content/presentaciones/{primer-parcial,segundo-parcial}/`, separadas de las notas/resúmenes/entregas que quedan dentro de la carpeta de cada clase en `content/{primer-parcial,segundo-parcial}/NN/`.
 
 ## Instrucciones para Claude
 

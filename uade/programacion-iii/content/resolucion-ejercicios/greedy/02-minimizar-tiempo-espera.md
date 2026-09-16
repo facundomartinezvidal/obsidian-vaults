@@ -29,7 +29,9 @@ ALGORITMO MINIMIZAR_TIEMPO_ESPERA
 Entrada: P: Vector<Proceso>   // Proceso = (id, t) enteros; t > 0
 Salida:  R: Vector<entero>    // R[k] = id del proceso atendido en la posición k
 
+  n ← longitud(P)
   Ordenar(P)                  // por tiempo t, de menor a mayor
+  R ← Vector<entero> de tamaño n
 
   para k = 1 hasta n
     R[k] ← P[k].id
